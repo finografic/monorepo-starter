@@ -1,0 +1,115 @@
+{
+  "name": "@finografic/monorepo-starter",
+  "version": "0.0.1",
+  "description": "PNPM monorepo starter project. React 19 + TypeScript + Vite, Hono, Drizzle, and more.",
+  "keywords": [
+    "finografic",
+    "monorepo",
+    "react",
+    "scaffold",
+    "starter",
+    "vite"
+  ],
+  "homepage": "https://github.com/finografic/monorepo-starter",
+  "bugs": {
+    "url": "https://github.com/finografic/monorepo-starter/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Justin Rankin",
+    "email": "justin.blair.rankin@gmail.com",
+    "url": "https://finografic.github.io/cv-justin-rankin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finografic/monorepo-starter.git"
+  },
+  "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "scripts": {
+    "---------- DEV_AND_BUILD": "---------------------------------------------",
+    "dev": "concurrently -n panda,vite \"pnpm panda:watch\" \"vite\"",
+    "build": "pnpm panda:codegen && tsc --project tsconfig.json && vite build",
+    "preview": "vite preview",
+    "·········· PANDA": "·····················································",
+    "panda:watch": "panda --watch",
+    "panda:codegen": "panda codegen",
+    "panda:clean": "panda codegen --clean",
+    "·········· TESTING": "···················································",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "·········· LINTING": "···················································",
+    "lint": "oxlint -c oxlint.config.ts",
+    "lint:fix": "oxlint -c oxlint.config.ts --fix",
+    "lint:md": "md-lint",
+    "lint:md:fix": "md-lint --fix",
+    "lint:ci": "oxlint -c oxlint.config.ts --quiet",
+    "·········· FORMATTING": "················································",
+    "format:check": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "·········· PUBLISH:GITHUB": "············································",
+    "release:github:patch": "pnpm run release:check && pnpm version patch && git push --follow-tags",
+    "release:github:minor": "pnpm run release:check && pnpm version minor && git push --follow-tags",
+    "release:github:major": "pnpm run release:check && pnpm version major && git push --follow-tags",
+    "release:check": "pnpm format:check && pnpm lint:fix && pnpm typecheck && pnpm test:run",
+    "release:publish": "pnpm publish --registry https://npm.pkg.github.com",
+    "·········· REGISTRIES": "················································",
+    "view:registry:github": "pnpm view @finografic/monorepo-starter --registry=https://npm.pkg.github.com",
+    "·········· PACKAGES": "··················································",
+    "update:deps:all": "pnpm update --latest",
+    "update:design-system": "pnpm update @finografic/design-system --latest @finografic/icons --latest",
+    "update:md-lint": "pnpm update @finografic/md-lint --latest",
+    "update:oxc-config": "pnpm update @finografic/oxc-config --latest && pnpm update oxfmt --latest && pnpm update oxlint --latest",
+    "·········· UTILS": "·····················································",
+    "tsc:debug": "tsc --pretty --project tsconfig.json",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "prepare": "husky && pnpm panda:codegen"
+  },
+  "dependencies": {
+    "@finografic/design-system": "^1.18.2",
+    "@finografic/icons": "^1.18.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@finografic/md-lint": "^0.9.6",
+    "@finografic/oxc-config": "^2.0.0",
+    "@pandacss/dev": "^1.11.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "oxfmt": "^0.43.0",
+    "oxlint": "^1.60.0",
+    "oxlint-tsgolint": "^0.21.1",
+    "tsx": "^4.22.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10",
+    "vitest": "^4.0.18"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,cjs}": [
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint -c oxlint.config.ts --fix --no-error-on-unmatched-pattern"
+    ],
+    "*.md": [
+      "oxfmt --no-error-on-unmatched-pattern",
+      "md-lint --fix"
+    ],
+    "*.{json,jsonc,yml,yaml,toml}": [
+      "oxfmt --no-error-on-unmatched-pattern"
+    ]
+  },
+  "packageManager": "pnpm@10.33.0"
+}

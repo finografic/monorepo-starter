@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "types": ["node"],
+  "exclude": ["node_modules", "dist", ".next", "build", "coverage", "**/*.spec.ts", "**/*.test.ts"],
+  "references": [
+    {
+      "path": "./config"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/i18n"
+    },
+    {
+      "path": "./apps/client"
+    },
+    {
+      "path": "./apps/server"
+    }
+  ]
+}

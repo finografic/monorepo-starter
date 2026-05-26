@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@workspace/config": ["config/index.ts"],
+      "@workspace/config/*": ["config/*"],
+      "@workspace/*": ["packages/*/dist"],
+    },
+    "resolveJsonModule": true,
+    "typeRoots": ["./packages/core/src/types", "./node_modules/@types"],
+    "types": ["node"],
+    "strict": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "verbatimModuleSyntax": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+  },
+}
