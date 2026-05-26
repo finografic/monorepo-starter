@@ -26,39 +26,36 @@
     "url": "git+https://github.com/finografic/monorepo-starter.git"
   },
   "type": "module",
-  "engines": {
-    "node": ">=22.17.1",
-    "pnpm": ">=10.20.0"
-  },
   "scripts": {
-    "---------- DEV": "-------------------------------------------------------",
+    "---------- DEV_AND_BUILD": "---------------------------------------------",
     "dev": "turbo run dev --parallel",
     "start": "turbo run start --parallel",
-    "·········· BUILD": "·····················································",
     "build": "turbo run build",
     "test": "turbo run test",
-    "·········· LINTING": "····················································",
+    "·········· LINTING": "···················································",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "lint:md": "md-lint",
     "lint:md:fix": "md-lint --fix",
-    "·········· FORMATTING": "··················································",
+    "·········· FORMATTING": "················································",
     "format:check": "oxfmt --check .",
     "format:fix": "oxfmt .",
-    "·········· TYPES": "····················································",
+    "·········· TYPES": "·····················································",
     "typecheck": "turbo run typecheck",
     "tsc:debug": "tsc --pretty --project tsconfig.json",
-    "·········· CLEAN": "····················································",
+    "·········· CLEAN": "·····················································",
     "clean": "pnpm --package=@finografic/project-scripts dlx purge-builds --recursive --detach",
     "clean:dry": "pnpm --package=@finografic/project-scripts dlx purge-builds --recursive --dry-run",
-    "reset": "pnpm run clean && pnpm install && pnpm run syncpack:fix",
-    "·········· DEPS": "·····················································",
+    "reset": "pnpm clean && pnpm install && pnpm syncpack:fix && pnpm build",
+    "·········· DEPS": "······················································",
     "deps:update": "pnpm update --latest --recursive",
+    "verify:deps": "pnpm -r exec pnpm install --no-frozen-lockfile",
     "syncpack:lint": "syncpack lint",
     "syncpack:fix": "syncpack fix-mismatches",
     "update:md-lint": "pnpm update @finografic/md-lint --latest",
     "update:oxc-config": "pnpm update @finografic/oxc-config --latest && pnpm update oxfmt --latest && pnpm update oxlint --latest",
     "update:project-scripts": "pnpm update @finografic/project-scripts --latest --recursive",
+    "·········· UTILS": "·····················································",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -90,6 +87,10 @@
     "*.{json,jsonc,yml,yaml,toml}": [
       "oxfmt --no-error-on-unmatched-pattern"
     ]
+  },
+  "engines": {
+    "node": ">=22.17.1",
+    "pnpm": ">=10.20.0"
   },
   "packageManager": "pnpm@10.33.0"
 }

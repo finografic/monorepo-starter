@@ -1,0 +1,26 @@
+{
+  "name": "@workspace/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "---------- DEV_AND_BUILD": "---------------------------------------------",
+    "dev": "echo 'placeholder — Phase 02 will add Vite dev server'",
+    "build": "echo 'placeholder — Phase 02 will add Vite build'",
+    "clean": "pnpm --package=@finografic/project-scripts dlx purge-builds --detach",
+    "·········· LINTING": "···················································",
+    "lint": "oxlint -c ../../oxlint.config.ts",
+    "lint:fix": "oxlint -c ../../oxlint.config.ts --fix",
+    "·········· FORMATTING": "················································",
+    "format:check": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "·········· TYPES": "·····················································",
+    "typecheck": "tsc --noEmit",
+    "tsc:debug": "tsc --pretty --project tsconfig.json"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@finografic/project-scripts": "^1.3.3",
+    "typescript": "^5.9.3"
+  }
+}

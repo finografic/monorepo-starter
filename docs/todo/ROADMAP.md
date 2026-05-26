@@ -1,18 +1,19 @@
 # @finografic/monorepo-starter — Roadmap
+
 > **Status:** Initial extraction plan defined. Phase 1 ready to start.
-📅 2026-05-27
+> 📅 2026-05-27
 
 This roadmap is the high-level sequencing plan for turning this repo into a selective-extraction
 starter based on `/Users/justin/repos-finografic/touch-monorepo`.
 
 ## How to use this file
 
-| Tier | Meaning                                 |
-| ---- | --------------------------------------- |
-| P0   | Active now                              |
-| P1   | Next, fully scoped                      |
-| P2   | Planned, sequencing decided             |
-| P3   | Backlog, intentionally deferred         |
+| Tier | Meaning                         |
+| ---- | ------------------------------- |
+| P0   | Active now                      |
+| P1   | Next, fully scoped              |
+| P2   | Planned, sequencing decided     |
+| P3   | Backlog, intentionally deferred |
 
 Detailed execution lives in:
 
@@ -23,7 +24,7 @@ Detailed execution lives in:
 
 ## P0 — Active
 
-- Root monorepo bootstrap and planning docs. Detail: [TODO — Phase 01 Root Bootstrap](/docs/todo/TODO_PHASE_01_ROOT_BOOTSTRAP.md)
+- ~~Root monorepo bootstrap and planning docs.~~ **Complete.** Detail: [TODO — Phase 01 Root Bootstrap](/docs/todo/TODO_PHASE_01_ROOT_BOOTSTRAP.md)
 
 ## P1 — Next Up
 
@@ -43,7 +44,7 @@ Detailed execution lives in:
 ## Non-starters
 
 - Do not copy the source monorepo wholesale and trim later.
-- Do not preserve `@workspace/*` package naming or imports in this repo.
+- All internal packages use the `@workspace/*` scope — this is intentional, not a leftover from the source.
 - Do not migrate deployment scripts, release flows, or production-only operational tooling yet.
 - Do not pull over source business routes, seed data, or domain-specific admin features in early phases.
 
@@ -55,8 +56,9 @@ Detailed execution lives in:
 
 ## Done
 
-| Date       | Item                                                                 |
-| ---------- | -------------------------------------------------------------------- |
-| 2026-05-27 | Initial repo scaffolding files added                                 |
-| 2026-05-27 | Root roadmap created                                                 |
-| 2026-05-27 | Root monorepo config baseline and phased extraction plan established |
+| Date       | Item                                                                   |
+| ---------- | ---------------------------------------------------------------------- |
+| 2026-05-27 | Initial repo scaffolding files added                                   |
+| 2026-05-27 | Root roadmap created                                                   |
+| 2026-05-27 | Root monorepo config baseline and phased extraction plan established   |
+| 2026-05-27 | Phase 01 complete — workspace packages created, install/typecheck pass |

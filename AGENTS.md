@@ -3,7 +3,8 @@
 ## Rules — Project-Specific
 
 - Project-specific rules live in `.github/instructions/project/**/*.instructions.md`.
-- Do not reference `@workspace/*` — all imports and deps must use published package names.
+- All internal workspace packages use the `@workspace/*` scope (e.g. `@workspace/client`, `@workspace/server`, `@workspace/config`).
+- External published dependencies use their real npm scope (e.g. `@finografic/project-scripts`).
 
 ## Rules — Global
 
@@ -74,11 +75,10 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 
 ## Learned Workspace Facts
 
-- GitHub Pages deploys on push to `master` via `.github/workflows/deploy.yml`; `release.yml` (version tags) is for npm/GitHub Releases only, not the live CV site.
-- Production URL: `https://finografic.github.io/monorepo-starter/` — Vite `base` is `/monorepo-starter/` (trailing slash required for assets); dev/preview `vite.config.ts` middleware 301-redirects `/monorepo-starter` to the slash URL (GitHub Pages does the same in production).
-- Panda CSS entry is `src/styles/theme.css` (PostCSS via `@pandacss/dev/postcss`); Vite runs PostCSS on imported CSS — token edits in `panda.config.ts` apply at build/dev time, not by importing `styled-system/styles.css` in app source (that file is Panda codegen output).
-- `panda.config.ts` must include `./node_modules/@finografic/design-system/dist/**/*.recipe.js` for registry installs (published package has `dist/components/*.recipe.js`, not `src/components/`); when `pnpm link` points at the DS monorepo, also include `./node_modules/@finografic/design-system/src/**/*.{ts,tsx}`.
-- `panda.config.ts` must set `jsxFramework: 'react'` so `styled-system/jsx` exists for `@finografic/design-system`.
-- Vite aliases for `assets`, `styles`, `components`, `layout`, `types`, `@styled-system/css`, and `@styled-system/jsx` must mirror `tsconfig` paths — TypeScript paths alone do not resolve in Vite; CV data types live under `src/types/` (`types` path alias).
+- This is a selective-extraction monorepo starter based on `/Users/justin/repos-finografic/touch-monorepo`.
+- Internal packages use `@workspace/*` scope; external deps use their real npm scopes.
+- `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
+- Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
+- Root stays deployment-free; CI/deploy workflows exist but won't run until app shells land.
 
 ---
