@@ -1,10 +1,11 @@
 import { networkInterfaces } from 'node:os';
+import { env } from '@workspace/config/env';
 import { serve } from '@hono/node-server';
 import pc from 'picocolors';
 
 import app from './app';
 
-const PORT = Number(process.env.API_PORT) || 4000;
+const PORT = env.API_PORT;
 
 function getLanIp(): string | null {
   const nets = networkInterfaces();

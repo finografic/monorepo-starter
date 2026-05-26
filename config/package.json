@@ -1,6 +1,6 @@
 {
   "name": "@workspace/config",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -9,6 +9,14 @@
     ".": {
       "import": "./src/index.ts",
       "types": "./src/index.ts"
+    },
+    "./env": {
+      "import": "./src/env.ts",
+      "types": "./src/env.ts"
+    },
+    "./paths": {
+      "import": "./src/paths.ts",
+      "types": "./src/paths.ts"
     }
   },
   "scripts": {
@@ -16,8 +24,12 @@
     "lint": "oxlint -c ../oxlint.config.ts",
     "clean": "rm -rf dist"
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "valibot": "^1.2.0"
+  },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "typescript": "^5.9.3"
   }
 }

@@ -32,7 +32,7 @@ Detailed execution lives in:
 
 ## P2 — Planned
 
-- Reintroduce shared packages only where they remain generic after cleanup. Detail: [TODO — Phase 03 Shared Platform Extraction](/docs/todo/TODO_PHASE_03_SHARED_PLATFORM_EXTRACTION.md)
+- ~~Reintroduce shared packages only where they remain generic after cleanup.~~ **Complete.** Detail: [TODO — Phase 03 Shared Platform Extraction](/docs/todo/TODO_PHASE_03_SHARED_PLATFORM_EXTRACTION.md)
 - Add optional platform layers for Drizzle, Auth.js, and i18next as starter-grade skeletons, not full product implementations. Detail: [TODO — Phase 04 Data Auth and I18n](/docs/todo/TODO_PHASE_04_DATA_AUTH_AND_I18N.md)
 
 ## P3 — Backlog
@@ -56,10 +56,11 @@ Detailed execution lives in:
 
 ## Done
 
-| Date       | Item                                                                    |
-| ---------- | ----------------------------------------------------------------------- |
-| 2026-05-27 | Initial repo scaffolding files added                                    |
-| 2026-05-27 | Root roadmap created                                                    |
-| 2026-05-27 | Root monorepo config baseline and phased extraction plan established    |
-| 2026-05-27 | Phase 01 complete — workspace packages created, install/typecheck pass  |
-| 2026-05-27 | Phase 02 complete — client and server app shells extracted and building |
+| Date       | Item                                                                       |
+| ---------- | -------------------------------------------------------------------------- |
+| 2026-05-27 | Initial repo scaffolding files added                                       |
+| 2026-05-27 | Root roadmap created                                                       |
+| 2026-05-27 | Root monorepo config baseline and phased extraction plan established       |
+| 2026-05-27 | Phase 01 complete — workspace packages created, install/typecheck pass     |
+| 2026-05-27 | Phase 02 complete — client and server app shells extracted and building    |
+| 2026-05-27 | Phase 03 complete — config extracted, core/shared skipped after evaluation |
