@@ -2,6 +2,7 @@ import { initAuthConfig } from '@hono/auth-js';
 import { cors } from 'hono/cors';
 
 import { getAuthConfig } from './lib/auth';
+import { configureOpenAPI } from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 
 import auth from './routes/auth/auth.route';
@@ -29,5 +30,7 @@ const routes = [health, demo, auth, i18n, users, translations] as const;
 routes.forEach((route) => {
   app.route('/api', route);
 });
+
+configureOpenAPI(app);
 
 export default app;

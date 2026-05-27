@@ -1,7 +1,8 @@
 # Next Steps — Recommended Implementation Order
 
-> **Context:** Phases 01–03 complete. Phase 04A–4D complete — auth, env, i18n, admin routes,
-> full client UI (login, landing, admin dashboard, users + translations CMS) are all wired up.
+> **Context:** Phases 01–05 complete. Auth, env, i18n, admin routes, full client UI, DS integration,
+> OpenAPI/Scalar docs, pino logging, error envelope, and rate limiting are all wired up.
+> `pnpm build` + `pnpm typecheck` pass cleanly across all packages.
 
 📅 2026-05-27
 
@@ -70,7 +71,7 @@
 
 ---
 
-## Phase 4E — Design System Integration
+## Phase 4E — Design System Integration ✅ DONE
 
 ### Why
 
@@ -82,12 +83,12 @@ The starter doubles as a portfolio piece — design-system usage must be visible
 
 ### Tasks
 
-- [ ] Verify `apps/client/vite.config.ts` matches cv-justin-rankin's Panda CSS setup
-- [ ] Verify `panda.config.ts` in `apps/client` uses `@finografic/design-system` preset correctly
-- [ ] Landing page uses DS tokens: `color.brand.*`, spacing, typography scale
-- [ ] Admin dashboard uses DS components: `Card`, `Button`, `Badge`, `Table`, `Input`, `Select`
-- [ ] Ensure DS peer dependencies (`react`, `react-dom`) match client versions
-- [ ] `pnpm build` end-to-end — Panda CSS generates, DS components render in build
+- [x] Verify `apps/client/vite.config.ts` matches cv-justin-rankin's Panda CSS setup
+- [x] Verify `panda.config.ts` in `apps/client` uses `@finografic/design-system` preset correctly
+- [x] Landing page uses DS tokens: `color.brand.*`, spacing, typography scale
+- [x] Admin dashboard uses DS components: `Card`, `Button`, `Badge`, `Table`, `Input`, `Select`
+- [x] Ensure DS peer dependencies (`react`, `react-dom`) match client versions
+- [x] `pnpm build` end-to-end — Panda CSS generates, DS components render in build
 
 ---
 
@@ -101,27 +102,21 @@ The starter doubles as a portfolio piece — design-system usage must be visible
 - [ ] `clear-all-cookies` endpoint tested (useful for debugging)
 - [ ] Auth cookie name confirms `monorepo-starter.session_token` in DevTools
 - [ ] i18n language switch persists across page refresh (browser language detector)
-- [ ] Typecheck: `pnpm typecheck` passes across all packages
+- [x] Typecheck: `pnpm typecheck` passes across all packages
 - [ ] Update `ROADMAP.md` Done table
 
 ---
 
-## Phase 5 — Observability + Developer Experience
+## Phase 5 — Observability + Developer Experience ✅ DONE
 
 Elevates this from "functional starter" to "reference implementation worth showing in a portfolio."
 
 ### Tasks
 
-- [ ] **OpenAPI / Scalar** — add `hono-openapi` and `@scalar/hono-api-reference` to server
-  - Route all public + admin endpoints through OpenAPI definitions
-  - Serve interactive docs at `/api/reference`
-  - This is a significant DX showcase item
-- [ ] **Request logging** — add `hono-pino` middleware (already in touch-monorepo)
-  - Structured JSON logs in production, pretty-print in dev
-  - Wire into `src/lib/create-app.ts`
-- [ ] **Error shape** — define a consistent `{ error, message, issues? }` JSON error envelope
-  - Used by all routes and the frontend error boundary
-- [ ] **Rate limiting** — simple in-memory rate limiter on `/api/auth/sign-up` and `/api/auth/signin`
+- [x] **OpenAPI / Scalar** — `hono-openapi` + `@scalar/hono-api-reference`; all endpoints annotated with `describeRoute`; interactive docs at `/api/reference`
+- [x] **Request logging** — `hono-pino` with picocolors dev destination (no thread-stream); wired into `create-app.ts` via `AppBindings`
+- [x] **Error shape** — `{ error, message }` envelope on all routes; `notFound` and `onError` updated
+- [x] **Rate limiting** — in-memory rate limiter (no extra deps); 5 req/min on sign-up, 10 req/min on sign-in
 
 ---
 

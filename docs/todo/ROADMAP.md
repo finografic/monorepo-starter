@@ -1,6 +1,6 @@
 # @finografic/monorepo-starter — Roadmap
 
-> **Status:** Phase 02 complete. App shells extracted and validated.
+> **Status:** Phase 04 complete. Auth, i18n, admin CMS, full client UI, and DS integration all done.
 > 📅 2026-05-27
 
 This roadmap is the high-level sequencing plan for turning this repo into a selective-extraction
@@ -33,7 +33,7 @@ Detailed execution lives in:
 ## P2 — Planned
 
 - ~~Reintroduce shared packages only where they remain generic after cleanup.~~ **Complete.** Detail: [TODO — Phase 03 Shared Platform Extraction](/docs/todo/TODO_PHASE_03_SHARED_PLATFORM_EXTRACTION.md)
-- Add optional platform layers for Drizzle, Auth.js, and i18next as starter-grade skeletons, not full product implementations. Detail: [TODO — Phase 04 Data Auth and I18n](/docs/todo/TODO_PHASE_04_DATA_AUTH_AND_I18N.md)
+- ~~Add optional platform layers for Drizzle, Auth.js, and i18next as starter-grade skeletons, not full product implementations.~~ **Complete.** Detail: [TODO — Phase 04 Data Auth and I18n](/docs/todo/TODO_PHASE_04_DATA_AUTH_AND_I18N.md)
 
 ## P3 — Backlog
 
@@ -56,11 +56,17 @@ Detailed execution lives in:
 
 ## Done
 
-| Date       | Item                                                                       |
-| ---------- | -------------------------------------------------------------------------- |
-| 2026-05-27 | Initial repo scaffolding files added                                       |
-| 2026-05-27 | Root roadmap created                                                       |
-| 2026-05-27 | Root monorepo config baseline and phased extraction plan established       |
-| 2026-05-27 | Phase 01 complete — workspace packages created, install/typecheck pass     |
-| 2026-05-27 | Phase 02 complete — client and server app shells extracted and building    |
-| 2026-05-27 | Phase 03 complete — config extracted, core/shared skipped after evaluation |
+| Date       | Item                                                                         |
+| ---------- | ---------------------------------------------------------------------------- |
+| 2026-05-27 | Initial repo scaffolding files added                                         |
+| 2026-05-27 | Root roadmap created                                                         |
+| 2026-05-27 | Root monorepo config baseline and phased extraction plan established         |
+| 2026-05-27 | Phase 01 complete — workspace packages created, install/typecheck pass       |
+| 2026-05-27 | Phase 02 complete — client and server app shells extracted and building      |
+| 2026-05-27 | Phase 03 complete — config extracted, core/shared skipped after evaluation   |
+| 2026-05-27 | Phase 04A complete — auth routes, server env, JWT strategy, cookie config    |
+| 2026-05-27 | Phase 04B complete — i18n schemas, seed data, GET /api/i18n routes           |
+| 2026-05-27 | Phase 04C complete — i18next HTTP backend, language detection, switcher      |
+| 2026-05-27 | Phase 04D complete — auth guards, admin CRUD routes, full client UI          |
+| 2026-05-27 | Phase 04E complete — DS/Panda config verified; build + typecheck all green   |
+| 2026-05-27 | Phase 05 complete — pino logging, OpenAPI/Scalar, error envelope, rate limit |
