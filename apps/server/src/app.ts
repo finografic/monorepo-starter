@@ -8,6 +8,8 @@ import auth from './routes/auth/auth.route';
 import demo from './routes/demo/demo.route';
 import health from './routes/health/health.route';
 import i18n from './routes/i18n/i18n.route';
+import translations from './routes/translations/translations.route';
+import users from './routes/users/users.route';
 
 const app = createApp();
 
@@ -22,7 +24,7 @@ app.use(
 
 app.use('*', initAuthConfig(getAuthConfig));
 
-const routes = [health, demo, auth, i18n] as const;
+const routes = [health, demo, auth, i18n, users, translations] as const;
 
 routes.forEach((route) => {
   app.route('/api', route);

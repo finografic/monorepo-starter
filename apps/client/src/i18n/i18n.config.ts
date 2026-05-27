@@ -51,7 +51,6 @@ void i18n
       console.log('language:', i18n.language);
       console.log('bundle loaded:', i18n.hasResourceBundle(i18n.language, I18N_NAMESPACE));
       console.groupEnd();
-      return;
     }
   })
   .catch((err: unknown) => {
