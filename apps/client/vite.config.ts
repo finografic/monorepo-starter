@@ -1,35 +1,40 @@
 import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig({
-  plugins: [
-    react({
-      jsxImportSource: '@emotion/react',
-    }),
-  ],
+export default defineConfig(({ mode }) => {
+  const rootEnv = loadEnv(mode, resolve(__dirname, '../..'), '');
+  const apiPort = rootEnv['API_PORT'] ?? '4000';
 
-  resolve: {
-    dedupe: ['react', 'react-dom'],
-    alias: {
-      '@styled-system/styles.css': resolve('styled-system/styles.css'),
-      '@styled-system/css': resolve('styled-system/css'),
-      '@styled-system/jsx': resolve('styled-system/jsx'),
-    },
-  },
+  return {
+    plugins: [
+      react({
+        jsxImportSource: '@emotion/react',
+      }),
+    ],
 
-  server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:4000',
-        changeOrigin: true,
+    resolve: {
+      dedupe: ['react', 'react-dom'],
+      alias: {
+        '@styled-system/styles.css': resolve('styled-system/styles.css'),
+        '@styled-system/css': resolve('styled-system/css'),
+        '@styled-system/jsx': resolve('styled-system/jsx'),
       },
     },
-  },
 
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-  },
+    server: {
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: `http://localhost:${apiPort}`,
+          changeOrigin: true,
+        },
+      },
+    },
+
+    build: {
+      outDir: 'dist',
+      sourcemap: true,
+    },
+  };
 });

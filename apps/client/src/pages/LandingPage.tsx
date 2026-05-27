@@ -1,15 +1,14 @@
+import { useTranslation } from 'react-i18next';
 import type React from 'react';
 
 export function LandingPage(): React.JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div>
-      <h1>Monorepo Starter</h1>
-      <p>A selective-extraction monorepo starter with Vite, React, and Hono.</p>
-      <ul>
-        <li>Client: Vite + React + TypeScript</li>
-        <li>Server: Hono + TypeScript</li>
-        <li>Tooling: Turbo, pnpm workspaces, oxlint, Syncpack</li>
-      </ul>
+      <h1>{t('app.title')}</h1>
+      <p>{t('app.subtitle')}</p>
+      <p>{t('app.description')}</p>
     </div>
   );
 }
