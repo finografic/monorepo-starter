@@ -79,6 +79,12 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 - Internal packages use `@workspace/*` scope; external deps use their real npm scopes.
 - `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
 - Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
-- Root stays deployment-free; CI/deploy workflows exist but won't run until app shells land.
+- `apps/client`: Vite 7 + React 19 + react-router-dom; dev on port 3000, proxies `/api` → server.
+- `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
+- `@workspace/config`: Valibot env validation + dotenv with root-dir auto-discovery + workspace paths.
+- Each app has a local `oxlint.config.ts` importing presets from `@finografic/oxc-config/oxlint`.
+- Root `package.json` does NOT set `"type": "module"` — each sub-package declares its own.
+- `packages/core` and `packages/shared` from source were evaluated and intentionally skipped.
+- No deployment workflow — GitHub Pages removed as unsuitable for full-stack monorepo.
 
 ---
