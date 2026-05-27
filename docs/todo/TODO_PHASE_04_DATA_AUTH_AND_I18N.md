@@ -1,6 +1,7 @@
 # TODO — Phase 04 Data Auth and I18n
+
 > **Status:** Not started. Intentionally deferred until the starter shape is stable.
-📅 2026-05-27
+> 📅 2026-05-27
 
 ## Goal
 

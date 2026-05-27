@@ -36,6 +36,7 @@
     "lint:fix": "turbo run lint:fix",
     "lint:md": "md-lint",
     "lint:md:fix": "md-lint --fix",
+    "lint:ci": "oxlint -c oxlint.config.ts --quiet",
     "·········· FORMATTING": "················································",
     "format:check": "oxfmt --check .",
     "format:fix": "oxfmt .",
