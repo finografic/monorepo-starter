@@ -5,22 +5,28 @@
   "type": "module",
   "scripts": {
     "---------- DEV": "-------------------------------------------------------",
-    "dev": "vite",
+    "dev": "panda codegen && panda cssgen && vite",
     "start": "vite preview",
     "·········· BUILD": "·····················································",
-    "build": "vite build",
+    "build": "panda codegen && panda cssgen && vite build",
     "·········· CLEAN": "·····················································",
-    "clean": "rm -rf dist node_modules/.vite",
+    "clean": "rm -rf dist node_modules/.vite styled-system",
     "·········· LINTING": "····················································",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint -c oxlint.config.ts"
+    "lint": "oxlint -c oxlint.config.ts",
+    "·········· CODEGEN": "····················································",
+    "panda:codegen": "panda codegen && panda cssgen"
   },
   "dependencies": {
+    "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@finografic/design-system": "^1.18.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0"
   },
   "devDependencies": {
+    "@pandacss/dev": "^1.11.1",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
