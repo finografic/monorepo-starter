@@ -12,17 +12,16 @@
     }
   },
   "scripts": {
-    "---------- DEV": "-------------------------------------------------------",
+    "---------- DEV_AND_BUILD": "---------------------------------------------",
     "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
-    "·········· BUILD": "·····················································",
     "build": "tsdown",
+    "start": "node dist/index.js",
     "·········· CLEAN": "·····················································",
-    "clean": "rm -rf dist",
-    "·········· LINTING": "····················································",
-    "typecheck": "tsc --noEmit",
+    "clean": "pnpm --package=@finografic/project-scripts dlx purge-builds --detach",
+    "·········· LINTING": "···················································",
     "lint": "oxlint -c oxlint.config.ts",
-    "·········· DB": "·········································································",
+    "typecheck": "tsc --noEmit",
+    "·········· DB": "························································",
     "db:push": "drizzle-kit push --config ./drizzle.config.ts",
     "db:generate": "drizzle-kit generate --config ./drizzle.config.ts",
     "db:seed": "tsx src/db/seed.ts"

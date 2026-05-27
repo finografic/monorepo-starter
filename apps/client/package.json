@@ -4,18 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "---------- DEV": "-------------------------------------------------------",
-    "dev": "panda codegen && panda cssgen && vite",
+    "---------- DEV_AND_BUILD": "---------------------------------------------",
+    "dev": "concurrently -n panda,vite \"pnpm panda:watch\" \"vite\"",
+    "build": "pnpm panda:codegen && tsc --project tsconfig.json && vite build",
     "start": "vite preview",
-    "·········· BUILD": "·····················································",
-    "build": "panda codegen && panda cssgen && vite build",
     "·········· CLEAN": "·····················································",
-    "clean": "rm -rf dist node_modules/.vite styled-system",
-    "·········· LINTING": "····················································",
+    "clean": "pnpm panda:clean && pnpm --package=@finografic/project-scripts dlx purge-builds --detach",
+    "·········· LINTING": "···················································",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint -c oxlint.config.ts",
-    "·········· CODEGEN": "····················································",
-    "panda:codegen": "panda codegen && panda cssgen"
+    "·········· CODEGEN": "···················································",
+    "panda:watch": "panda --watch",
+    "panda:codegen": "panda codegen && panda cssgen",
+    "panda:clean": "panda codegen --clean"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
@@ -31,6 +32,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^9.2.1",
     "typescript": "^5.9.3",
     "vite": "^7.1.10",
     "vitest": "^4.0.18"
