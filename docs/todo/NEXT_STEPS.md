@@ -1,124 +1,179 @@
 # Next Steps — Recommended Implementation Order
 
-> **Context:** Phases 01–03 are complete. Phase 04 is in progress — design-system and Drizzle auth
-> schemas are wired up. This document captures the recommended path forward.
+> **Context:** Phases 01–03 are complete. Phase 04 is in progress — design-system, Drizzle auth
+> schemas, env.server, auth routes, and i18n (tables + routes + seeds) are all wired up.
 
 📅 2026-05-27
 
 ---
 
-## Phase 4A — Auth Routes + Server Env (next immediate)
+## Phase 4A — Auth Routes + Server Env ✅ DONE
 
-### Why first
-
-Auth is the backbone for the admin/CMS — nothing behind a login can work without it.
-
-### Tasks
-
-- [ ] Add server-specific env layer (`apps/server/env.server.ts`) extending `@workspace/config/env`.
-  - Fields: `DB_NAME`, `DB_PATH`, `AUTH_SECRET`, `AUTH_COOKIE_PREFIX`, cookie suffixes.
-  - Merges with shared env using the same Valibot pattern from touch-monorepo.
-- [ ] Add auth library (`src/lib/auth.ts`) with `@auth/core` Credentials provider + JWT strategy.
-  - `getAuthConfig()` function for `@hono/auth-js` integration.
-  - Session callbacks exposing `user.id` and `user.role` on the JWT/session.
-- [ ] Add auth route (`src/routes/auth/auth.route.ts`) following established route pattern:
-  - `POST /api/auth/sign-up` — custom registration (Auth.js doesn't handle this).
-  - `POST /api/auth/clear-all-cookies` — dev/debug helper.
-  - `USE /api/auth/*` — Auth.js handler (session, csrf, signin, signout, callback).
-- [ ] Wire `initAuthConfig` middleware in `src/app.ts`.
-- [ ] Create the `data/` directory and add `data/*.sqlite.db` to `.gitignore`.
-- [ ] Test: `db:push` creates tables, `db:seed` creates admin + demo user, sign-in flow works.
+- [x] `apps/server/env.server.ts` — Valibot-validated, merges shared env, builds `COOKIES` object + `COOKIE_DELETE_ATTRIBUTES`
+- [x] `apps/server/tsconfig.json` — path aliases: `env.server`, `db`, `db/*`, `lib/*`, `routes/*`, `utils/*`
+- [x] `src/lib/auth.ts` — `getAuthConfig()` for `@hono/auth-js`, JWT strategy, role in session
+- [x] `src/lib/auth-secret.runtime.ts` — ephemeral secret in dev, stable in prod
+- [x] `src/lib/valibot.utils.ts` — `sqliteBooleanField()` helper matching touch-monorepo
+- [x] `src/routes/auth/auth.route.ts` — sign-up, clear-all-cookies, `authHandler()`
+- [x] `src/app.ts` — `initAuthConfig` middleware wired
+- [x] `.env.development` / `.env.example` — updated with auth + cookie fields
+- [x] `data/*.sqlite.db` already covered by `.gitignore`
 
 ---
 
-## Phase 4B — i18n Tables + Routes
+## Phase 4B — i18n Tables + Routes ✅ DONE
 
-### Why second
-
-Translation tables are another DB concern that should land alongside auth while the DB layer is fresh.
-
-### Tasks
-
-- [ ] Add `supported_languages` schema (id, isoCode, nativeName, displayName, isActive, isDefault, sortOrder).
-- [ ] Add 3 translation schemas: `translations_ui`, `translations_app`, `translations_admin`.
-  - All share: `id`, `key` (unique, dot-notation), `translations` (JSON `Record<string, string>`), `isActive`, timestamps.
-- [ ] Add i18n route (`src/routes/i18n/`) with two endpoints:
-  - `GET /api/i18n/:namespace` — bulk load all domains grouped for i18next.
-  - `GET /api/i18n/translations/:domain` — single domain array for CMS editing.
-- [ ] Seed supported languages: `en-GB` (default) + `es-ES`.
-- [ ] Seed starter translations for each domain (small representative set).
-- [ ] Update `db:push` and `db:seed` to include i18n tables.
+- [x] `src/db/schemas/supported-languages.schema.ts`
+- [x] `src/db/schemas/translations-ui.schema.ts`
+- [x] `src/db/schemas/translations-app.schema.ts`
+- [x] `src/db/schemas/translations-admin.schema.ts`
+- [x] `src/routes/i18n/i18n.route.ts`
+  - `GET /api/i18n/:namespace?lng=` — bulk domain-grouped load for i18next
+  - `GET /api/i18n/translations/:domain?lng=` — single domain array for CMS
+- [x] Seed: `supported-languages` (en-GB default + es-ES)
+- [x] Seed: `translations-ui` (22 entries), `translations-app` (12), `translations-admin` (19)
+- [x] `src/db/seed.ts` — orchestrated, idempotent, picocolors output
 
 ---
 
-## Phase 4C — Client i18n Integration
+## Phase 4C — Client i18n Integration (next)
 
-### Why third
+### Why
 
-Once the server serves translations, the client can consume them.
+Once the server serves translations, the client can consume them — and the language switcher feeds into the landing page demo.
 
 ### Tasks
 
-- [ ] Install `i18next`, `react-i18next`, `i18next-http-backend`, `i18next-browser-languagedetector`.
-- [ ] Create `src/i18n.config.ts` with HTTP backend pointing at `/api/i18n/translations`.
-- [ ] Add `I18nextProvider` to `main.tsx`.
-- [ ] Add language switcher component (en-GB / es-ES toggle).
-- [ ] Verify translations load and switch at runtime.
+- [ ] Install `i18next`, `react-i18next`, `i18next-http-backend`, `i18next-browser-languagedetector`
+- [ ] `src/i18n/i18n.config.ts` — HTTP backend pointing at `/api/i18n/translations`
+- [ ] `src/i18n/i18n.types.ts` — TypeScript types for translation namespaces
+- [ ] Add `I18nextProvider` to `main.tsx`, wrap with `Suspense`
+- [ ] `src/components/LanguageSwitcher.tsx` — en-GB / es-ES toggle, uses design-system tokens
+- [ ] Verify translations load on first render and switch at runtime without flash
 
 ---
 
 ## Phase 4D — Client Pages + Admin Dashboard
 
-### Why fourth
+### Why
 
 Pages depend on design-system, auth context, and i18n all being available.
 
 ### Tasks
 
-- [ ] **Landing / Splash page** — uses `@finografic/design-system` components, i18n strings.
-  - Hero section, feature highlights, call-to-action.
-  - Demonstrates design-system usage as a portfolio piece.
-- [ ] **Login page** — form submitting to `/api/auth/signin/credentials`.
-- [ ] **Admin dashboard layout** — protected route, sidebar nav, header with user info.
-- [ ] **3 CMS sections** (admin sub-routes):
-  1. **Users** — list users from `/api/users` (admin-only).
-  2. **Translations** — view/edit translations from `/api/i18n/translations/:domain`.
-  3. **Settings** — app configuration placeholder (extensible).
-- [ ] Add server routes to support CMS: `GET /api/users` (admin), CRUD for translations.
-- [ ] Auth guard middleware for admin routes (check `role === 'admin'`).
+#### Server additions
+
+- [ ] `src/routes/users/users.route.ts` — `GET /api/users` (admin-only), `PATCH /api/users/:id`, `DELETE /api/users/:id`
+- [ ] `src/routes/translations/translations.route.ts` — `PATCH /api/translations/:domain/:id` (admin)
+- [ ] Auth guard middleware `src/middlewares/require-auth.ts` — reject non-session requests
+- [ ] Role guard middleware `src/middlewares/require-role.ts` — reject if `role !== 'admin'`
+
+#### Client pages
+
+- [ ] **`/` Landing / Splash page** — showcases `@finografic/design-system` components:
+  - Hero with animated headline, i18n strings, language switcher
+  - Feature grid (Hono, Panda CSS, Auth.js, i18n, SQLite, Turbo)
+  - "Tech stack" section with design-system card components
+  - CTA → `/login`
+- [ ] **`/login` Login page** — sign-in form → `/api/auth/signin/credentials`
+  - Error state, loading state, redirect to `/admin` on success
+- [ ] **`/admin` Admin dashboard layout** — protected route, sidebar nav, header with user avatar + role badge
+- [ ] **`/admin/users` Users CMS** — data table, inline role editing, delete with confirm
+- [ ] **`/admin/translations` Translations CMS** — domain tabs (ui / app / admin), inline key editing, language toggle
+- [ ] **`/admin/settings` Settings** — app metadata, supported languages toggle, language sort order
+
+#### Client infrastructure
+
+- [ ] `src/lib/auth-client.ts` — thin wrapper around `/api/auth/session` + sign-in/out
+- [ ] `src/context/AuthContext.tsx` — session provider + `useAuth()` hook
+- [ ] `src/components/ProtectedRoute.tsx` — wraps admin routes, redirects to `/login`
+- [ ] `src/components/AdminLayout.tsx` — sidebar + topbar, uses design-system layout tokens
 
 ---
 
-## Phase 4E — Polish + Validation
+## Phase 4E — Design System Integration
+
+### Why
+
+The starter doubles as a portfolio piece — design-system usage must be visible and polished.
+
+### Source
+
+`/Users/justin/repos-finografic/cv-justin-rankin` — superior Panda CSS + design-system Vite config.
 
 ### Tasks
 
-- [ ] Full `pnpm install && pnpm build && pnpm dev` validation.
-- [ ] Verify the end-to-end flow: landing → login → dashboard → CMS sections.
-- [ ] Ensure design-system components render correctly with Panda tokens.
-- [ ] Clean up any remaining `@workspace/*` type errors or missing imports.
-- [ ] Update `TODO_PHASE_04_DATA_AUTH_AND_I18N.md` to mark complete.
-- [ ] Update `ROADMAP.md` Done table.
+- [ ] Verify `apps/client/vite.config.ts` matches cv-justin-rankin's Panda CSS setup
+- [ ] Verify `panda.config.ts` in `apps/client` uses `@finografic/design-system` preset correctly
+- [ ] Landing page uses DS tokens: `color.brand.*`, spacing, typography scale
+- [ ] Admin dashboard uses DS components: `Card`, `Button`, `Badge`, `Table`, `Input`, `Select`
+- [ ] Ensure DS peer dependencies (`react`, `react-dom`) match client versions
+- [ ] `pnpm build` end-to-end — Panda CSS generates, DS components render in build
 
 ---
 
-## Phase 5 (Future) — Optional Enhancements
+## Phase 4F — Polish + Validation
 
-These are NOT part of Phase 04 but are natural extensions once the starter is stable.
+### Tasks
 
-- [ ] Add Vitest tests for auth routes and password utils.
-- [ ] Add CI workflow (`ci.yml`) that runs install + typecheck + build + test.
-- [ ] Consider React Query (`@tanstack/react-query`) for client data fetching.
-- [ ] Consider OpenAPI/Scalar for server route documentation.
-- [ ] Add `packages/shared` if cross-app DTOs emerge during CMS development.
-- [ ] Evaluate whether `packages/i18n` as a separate package (like touch-monorepo) is warranted, or if the config + server routes are sufficient for this starter.
+- [ ] Full `pnpm install && pnpm build && pnpm dev` validation from clean state
+- [ ] End-to-end flow: landing → login → dashboard → users table → translations editor
+- [ ] Sign-up flow on `/login` page (toggle form mode)
+- [ ] `clear-all-cookies` endpoint tested (useful for debugging)
+- [ ] Auth cookie name confirms `monorepo-starter.session_token` in DevTools
+- [ ] i18n language switch persists across page refresh (browser language detector)
+- [ ] Typecheck: `pnpm typecheck` passes across all packages
+- [ ] Update `ROADMAP.md` Done table
+
+---
+
+## Phase 5 — Observability + Developer Experience
+
+Elevates this from "functional starter" to "reference implementation worth showing in a portfolio."
+
+### Tasks
+
+- [ ] **OpenAPI / Scalar** — add `hono-openapi` and `@scalar/hono-api-reference` to server
+  - Route all public + admin endpoints through OpenAPI definitions
+  - Serve interactive docs at `/api/reference`
+  - This is a significant DX showcase item
+- [ ] **Request logging** — add `hono-pino` middleware (already in touch-monorepo)
+  - Structured JSON logs in production, pretty-print in dev
+  - Wire into `src/lib/create-app.ts`
+- [ ] **Error shape** — define a consistent `{ error, message, issues? }` JSON error envelope
+  - Used by all routes and the frontend error boundary
+- [ ] **Rate limiting** — simple in-memory rate limiter on `/api/auth/sign-up` and `/api/auth/signin`
+
+---
+
+## Phase 6 — Testing
+
+- [ ] Vitest unit tests for `password.utils.ts` (hash + verify)
+- [ ] Vitest unit tests for i18n `buildDomainGroupedResources` logic
+- [ ] Vitest integration tests for auth routes (`sign-up`, `sign-in`, `signout`)
+- [ ] Vitest integration tests for i18n routes (`GET /api/i18n/translations`)
+- [ ] CI workflow (`ci.yml`) — install + typecheck + build + test on push/PR
+
+---
+
+## Phase 7 — Optional Enhancements
+
+These are natural extensions once the starter is stable and demonstrated.
+
+- [ ] **React Query** (`@tanstack/react-query`) for client data fetching in admin
+- [ ] **Optimistic updates** in translations editor (shows off React Query mutation pattern)
+- [ ] **`packages/shared`** — extract shared DTOs (user, translation) if they emerge during CMS
+- [ ] **Dark mode** — design-system token switch, persisted in localStorage
+- [ ] **Email verification** — extend auth flow with a verification token table + email send
+- [ ] **OAuth provider** — add GitHub or Google provider to Auth.js config as a demo
 
 ---
 
 ## Key Principles
 
-1. **Small batches with cleanup** — commit checkpoint after each sub-phase.
-2. **Server first, client second** — routes/schemas must exist before UI can consume them.
-3. **Design-system as portfolio** — use DS components on landing page and admin to showcase the system.
+1. **Server first, client second** — routes/schemas must exist before UI can consume them.
+2. **Design-system as portfolio** — use DS components on landing page and admin to showcase the system.
+3. **Follow source patterns** — match touch-monorepo's route/handler/schema structure exactly.
 4. **Starter-grade, not production** — auth is real but minimal; CMS is functional but not feature-complete.
-5. **Follow source patterns** — match touch-monorepo's route/handler/schema structure exactly.
+5. **Small batches with cleanup** — commit checkpoint after each sub-phase.
+6. **Demo-worthy UX** — every page should look intentional; this is a portfolio piece, not a boilerplate dump.

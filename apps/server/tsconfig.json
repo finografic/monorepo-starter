@@ -3,8 +3,16 @@
   "compilerOptions": {
     "noEmit": true,
     "outDir": "./dist",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "env.server": ["./env.server"],
+      "db": ["./src/db"],
+      "db/*": ["./src/db/*"],
+      "lib/*": ["./src/lib/*"],
+      "routes/*": ["./src/routes/*"],
+      "utils/*": ["./src/utils/*"]
+    }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "env.server.ts"],
   "exclude": ["node_modules", "dist"]
 }

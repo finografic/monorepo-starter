@@ -1,18 +1,14 @@
-import path from 'node:path';
-import { paths } from '@workspace/config/paths';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
+import { env } from 'env.server';
 import pc from 'picocolors';
 
 import * as schema from './schemas';
 
-const dbName = process.env.DB_NAME || 'development.sqlite.db';
-const dbPath = process.env.DB_PATH || path.resolve(paths.data.dir, dbName);
-
-const sqlite = new Database(dbPath);
+const sqlite = new Database(env.DB_PATH);
 
 if (sqlite.open) {
-  console.log(`  ${pc.dim('●')} Database:      ${pc.dim(dbName)}`);
+  console.log(`  ${pc.dim('●')} Database:      ${pc.dim(env.DB_NAME)}`);
 }
 
 export const db = drizzle(sqlite, { schema });
