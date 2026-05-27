@@ -1,7 +1,7 @@
 # Next Steps — Recommended Implementation Order
 
-> **Context:** Phases 01–03 are complete. Phase 04 is in progress — design-system, Drizzle auth
-> schemas, env.server, auth routes, and i18n (tables + routes + seeds) are all wired up.
+> **Context:** Phases 01–03 complete. Phase 04A–4D complete — auth, env, i18n, admin routes,
+> full client UI (login, landing, admin dashboard, users + translations CMS) are all wired up.
 
 📅 2026-05-27
 
@@ -36,58 +36,37 @@
 
 ---
 
-## Phase 4C — Client i18n Integration (next)
+## Phase 4C — Client i18n Integration ✅ DONE
 
-### Why
-
-Once the server serves translations, the client can consume them — and the language switcher feeds into the landing page demo.
-
-### Tasks
-
-- [ ] Install `i18next`, `react-i18next`, `i18next-http-backend`, `i18next-browser-languagedetector`
-- [ ] `src/i18n/i18n.config.ts` — HTTP backend pointing at `/api/i18n/translations`
-- [ ] `src/i18n/i18n.types.ts` — TypeScript types for translation namespaces
-- [ ] Add `I18nextProvider` to `main.tsx`, wrap with `Suspense`
-- [ ] `src/components/LanguageSwitcher.tsx` — en-GB / es-ES toggle, uses design-system tokens
-- [ ] Verify translations load on first render and switch at runtime without flash
+- [x] `src/i18n/i18n.config.ts` — HTTP backend `/api/i18n/translations?lng=`, localStorage detection
+- [x] `src/i18n/i18n.constants.ts` — `SUPPORTED_LANGUAGES`, `DEFAULT_LANGUAGE`, `LOCALE_MAPPING`
+- [x] `I18nextProvider` added to `main.tsx`
+- [x] `src/components/LanguageSwitcher/LanguageSwitcher.tsx` — en-GB / es-ES toggle with DS tokens
 
 ---
 
-## Phase 4D — Client Pages + Admin Dashboard
+## Phase 4D — Client Pages + Admin Dashboard ✅ DONE
 
-### Why
+### Server
 
-Pages depend on design-system, auth context, and i18n all being available.
+- [x] `src/lib/require-auth.ts` — `requireAuth()` using `verifyAuth()` from `@hono/auth-js`
+- [x] `src/lib/require-role.ts` — `requireRole('admin')` checks session role via `getAuthUser(c)`
+- [x] `src/routes/users/users.route.ts` — `GET /api/users` (admin), `PATCH`, `DELETE`
+- [x] `src/routes/translations/translations.route.ts` — `PATCH /api/translations/:domain/:id` (admin)
 
-### Tasks
+### Client
 
-#### Server additions
-
-- [ ] `src/routes/users/users.route.ts` — `GET /api/users` (admin-only), `PATCH /api/users/:id`, `DELETE /api/users/:id`
-- [ ] `src/routes/translations/translations.route.ts` — `PATCH /api/translations/:domain/:id` (admin)
-- [ ] Auth guard middleware `src/middlewares/require-auth.ts` — reject non-session requests
-- [ ] Role guard middleware `src/middlewares/require-role.ts` — reject if `role !== 'admin'`
-
-#### Client pages
-
-- [ ] **`/` Landing / Splash page** — showcases `@finografic/design-system` components:
-  - Hero with animated headline, i18n strings, language switcher
-  - Feature grid (Hono, Panda CSS, Auth.js, i18n, SQLite, Turbo)
-  - "Tech stack" section with design-system card components
-  - CTA → `/login`
-- [ ] **`/login` Login page** — sign-in form → `/api/auth/signin/credentials`
-  - Error state, loading state, redirect to `/admin` on success
-- [ ] **`/admin` Admin dashboard layout** — protected route, sidebar nav, header with user avatar + role badge
-- [ ] **`/admin/users` Users CMS** — data table, inline role editing, delete with confirm
-- [ ] **`/admin/translations` Translations CMS** — domain tabs (ui / app / admin), inline key editing, language toggle
-- [ ] **`/admin/settings` Settings** — app metadata, supported languages toggle, language sort order
-
-#### Client infrastructure
-
-- [ ] `src/lib/auth-client.ts` — thin wrapper around `/api/auth/session` + sign-in/out
-- [ ] `src/context/AuthContext.tsx` — session provider + `useAuth()` hook
-- [ ] `src/components/ProtectedRoute.tsx` — wraps admin routes, redirects to `/login`
-- [ ] `src/components/AdminLayout.tsx` — sidebar + topbar, uses design-system layout tokens
+- [x] `src/lib/auth-client.ts` — CSRF-aware sign-in/sign-up/sign-out (opaqueredirect pattern)
+- [x] `src/context/AuthContext.tsx` — `AuthProvider` + `useAuth()`, useMemo value, visibilitychange refresh
+- [x] `src/components/ProtectedRoute.tsx` — role-aware guard with Spinner fallback
+- [x] `src/layout/AdminLayout.tsx` — sidebar nav + topbar (AvatarDS, sign-out)
+- [x] `src/layout/Layout.tsx` — updated header with auth state, role badge, language switcher
+- [x] `src/pages/LoginPage.tsx` — sign-in / sign-up toggle with DS Card + Button
+- [x] `src/pages/LandingPage.tsx` — hero + feature grid redesign (DS Badge, Card)
+- [x] `src/pages/admin/AdminDashboardPage.tsx` — stat cards
+- [x] `src/pages/admin/AdminUsersPage.tsx` — DataTable with inline role editing
+- [x] `src/pages/admin/AdminTranslationsPage.tsx` — TabsDS with per-domain inline editor
+- [x] `src/pages/admin/AdminSettingsPage.tsx` — placeholder
 
 ---
 
