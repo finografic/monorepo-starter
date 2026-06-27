@@ -5,18 +5,28 @@ import { eq } from 'drizzle-orm';
 import { env } from 'env.server';
 import { describeRoute } from 'hono-openapi';
 import { rateLimit } from 'middlewares/rate-limit';
+import * as v from 'valibot';
 
 import { hashPassword } from 'utils/password.utils';
 
-import type { AppContext } from 'types/app.types';
+import type { AppContext, ValidatedJsonContext } from 'types/app.types';
 
 const { COOKIES, COOKIE_DELETE_ATTRIBUTES } = env;
 
 export const signUpRateLimit = rateLimit({ limit: 5, windowMs: 60_000 });
 export const signInRateLimit = rateLimit({ limit: 10, windowMs: 60_000 });
 
+export const signUpBodySchema = v.object({
+  email: v.pipe(v.string(), v.email()),
+  password: v.pipe(v.string(), v.minLength(4), v.maxLength(64)),
+  name: v.pipe(v.string(), v.minLength(1)),
+});
+
+type SignUpBody = v.InferOutput<typeof signUpBodySchema>;
+
 export const signUp = {
   path: '/sign-up' as const,
+  schema: signUpBodySchema,
   middleware: describeRoute({
     tags: ['auth'],
     summary: 'Register a new account',
@@ -28,21 +38,9 @@ export const signUp = {
       429: { description: 'Rate limit exceeded' },
     },
   }),
-  handler: async (c: AppContext) => {
+  handler: async (c: ValidatedJsonContext<SignUpBody, '/sign-up'>) => {
     try {
-      const { email, password, name } = await c.req.json<{
-        email: string;
-        password: string;
-        name: string;
-      }>();
-
-      if (!email || !password || !name) {
-        return c.json({ error: 'VALIDATION_ERROR', message: 'Email, password, and name are required' }, 400);
-      }
-
-      if (password.length < 4 || password.length > 64) {
-        return c.json({ error: 'VALIDATION_ERROR', message: 'Password must be 4–64 characters' }, 400);
-      }
+      const { email, password, name } = c.req.valid('json');
 
       const [existing] = await db.select({ id: user.id }).from(user).where(eq(user.email, email)).limit(1);
 

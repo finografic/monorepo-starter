@@ -20,7 +20,7 @@ async function updateTranslation({
   const res = await api.translations[':domain'][':id'].$patch({
     param: { domain, id },
     json: { translations },
-  } as { param: { domain: TranslationDomain; id: string }; json: { translations: Record<string, string> } });
+  });
 
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return (await res.json()) as TranslationRow;

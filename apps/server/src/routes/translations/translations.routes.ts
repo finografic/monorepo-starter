@@ -14,7 +14,15 @@ import * as v from 'valibot';
 import { requireAuth } from 'lib/require-auth';
 import { requireRole } from 'lib/require-role';
 
-import type { AppContext } from 'types/app.types';
+import type { ValidatedJsonContext } from 'types/app.types';
+
+const translationPatchSchema = v.union([
+  translationUiSchemas.patch,
+  translationAppSchemas.patch,
+  translationAdminSchemas.patch,
+]);
+
+type TranslationPatch = v.InferOutput<typeof translationPatchSchema>;
 
 function normalisePatch(patch: {
   isActive?: 0 | 1 | undefined;
@@ -31,6 +39,7 @@ function normalisePatch(patch: {
 
 export const update = {
   path: '/:domain/:id' as const,
+  schema: translationPatchSchema,
   middleware: describeRoute({
     tags: ['translations'],
     summary: 'Update a translation entry',
@@ -43,43 +52,37 @@ export const update = {
       404: { description: 'Entry not found' },
     },
   }),
-  handler: async (c: AppContext) => {
+  handler: async (c: ValidatedJsonContext<TranslationPatch, '/:domain/:id'>) => {
     const { domain, id } = c.req.param();
     if (!id) {
       return c.json({ error: 'VALIDATION_ERROR', message: 'Translation id is required' }, 400);
     }
 
-    const body = await c.req.json<unknown>();
+    const patch = c.req.valid('json');
 
     switch (domain) {
       case 'ui': {
-        const parsed = v.safeParse(translationUiSchemas.patch, body);
-        if (!parsed.success) return c.json({ error: 'VALIDATION_ERROR', message: 'Invalid data' }, 400);
         const [updated] = await db
           .update(translations_ui)
-          .set(normalisePatch(parsed.output))
+          .set(normalisePatch(patch))
           .where(eq(translations_ui.id, id))
           .returning();
         if (!updated) return c.json({ error: 'NOT_FOUND', message: 'Entry not found' }, 404);
         return c.json(updated, 200);
       }
       case 'app': {
-        const parsed = v.safeParse(translationAppSchemas.patch, body);
-        if (!parsed.success) return c.json({ error: 'VALIDATION_ERROR', message: 'Invalid data' }, 400);
         const [updated] = await db
           .update(translations_app)
-          .set(normalisePatch(parsed.output))
+          .set(normalisePatch(patch))
           .where(eq(translations_app.id, id))
           .returning();
         if (!updated) return c.json({ error: 'NOT_FOUND', message: 'Entry not found' }, 404);
         return c.json(updated, 200);
       }
       case 'admin': {
-        const parsed = v.safeParse(translationAdminSchemas.patch, body);
-        if (!parsed.success) return c.json({ error: 'VALIDATION_ERROR', message: 'Invalid data' }, 400);
         const [updated] = await db
           .update(translations_admin)
-          .set(normalisePatch(parsed.output))
+          .set(normalisePatch(patch))
           .where(eq(translations_admin.id, id))
           .returning();
         if (!updated) return c.json({ error: 'NOT_FOUND', message: 'Entry not found' }, 404);

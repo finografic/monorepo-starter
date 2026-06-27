@@ -14,7 +14,7 @@ async function updateUser({ id, role }: UpdateUserInput): Promise<UserRow> {
   const res = await api.users[':id'].$patch({
     param: { id },
     json: { role },
-  } as { param: { id: string }; json: { role: UserRole } });
+  });
 
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return (await res.json()) as UserRow;

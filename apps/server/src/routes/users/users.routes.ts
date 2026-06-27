@@ -1,6 +1,6 @@
 import { getAuthUser } from '@hono/auth-js';
 import { db } from 'db';
-import { user, userSchemas } from 'db/schemas';
+import { user } from 'db/schemas';
 import { eq } from 'drizzle-orm';
 import { describeRoute } from 'hono-openapi';
 import * as v from 'valibot';
@@ -8,7 +8,14 @@ import * as v from 'valibot';
 import { requireAuth } from 'lib/require-auth';
 import { requireRole } from 'lib/require-role';
 
-import type { AppContext } from 'types/app.types';
+import type { AppContext, ValidatedJsonContext } from 'types/app.types';
+
+const userUpdateBodySchema = v.object({
+  name: v.optional(v.string()),
+  role: v.optional(v.picklist(['public', 'user', 'admin'])),
+});
+
+type UserUpdateBody = v.InferOutput<typeof userUpdateBodySchema>;
 
 export const list = {
   path: '/' as const,
@@ -41,6 +48,7 @@ export const list = {
 
 export const update = {
   path: '/:id' as const,
+  schema: userUpdateBodySchema,
   middleware: describeRoute({
     tags: ['users'],
     summary: 'Update a user',
@@ -53,7 +61,7 @@ export const update = {
       404: { description: 'User not found' },
     },
   }),
-  handler: async (c: AppContext) => {
+  handler: async (c: ValidatedJsonContext<UserUpdateBody, '/:id'>) => {
     const { id } = c.req.param();
     if (!id) return c.json({ error: 'VALIDATION_ERROR', message: 'User id is required' }, 400);
 
@@ -62,11 +70,7 @@ export const update = {
     const requestingId = authUser?.session?.user?.id;
     const requestingRole = (authUser?.session?.user as { role?: string } | undefined)?.role ?? 'user';
 
-    const body = await c.req.json<unknown>();
-    const parsed = v.safeParse(userSchemas.patch, body);
-    if (!parsed.success) return c.json({ error: 'VALIDATION_ERROR', message: 'Invalid data' }, 400);
-
-    const patch = parsed.output;
+    const patch = c.req.valid('json');
 
     if (patch.role !== undefined && requestingRole !== 'admin') {
       return c.json({ error: 'FORBIDDEN', message: 'Only admins can change roles' }, 403);

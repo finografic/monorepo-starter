@@ -952,9 +952,6 @@ packages:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
       react-hook-form: 7.71.1
-    peerDependenciesMeta:
-      react-hook-form:
-        optional: true
 
   '@finografic/icons@1.19.2':
     resolution: {integrity: sha512-yWwglSlTqCjWdeNBeNVTelIOfpF0c8OpoS+c9e2IaZIl5wj/+FjrX3bcze2MaTpDxtH/Br1CN0NJDRo2YTlzsQ==, tarball: https://npm.pkg.github.com/download/@finografic/icons/1.19.2/aeb3a0530f17133de14cdebe86f315286e3ba57f}
@@ -5762,7 +5759,6 @@ snapshots:
       match-sorter: 8.2.0
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
-    optionalDependencies:
       react-hook-form: 7.71.1(react@19.2.7)
 
   '@finografic/icons@1.19.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
@@ -9337,7 +9333,6 @@ snapshots:
   react-hook-form@7.71.1(react@19.2.7):
     dependencies:
       react: 19.2.7
-    optional: true
 
   react-i18next@17.0.8(i18next@26.3.3(typescript@5.9.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3):
     dependencies:

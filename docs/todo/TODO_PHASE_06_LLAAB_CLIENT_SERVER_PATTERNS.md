@@ -191,7 +191,7 @@ apps/client/src/providers/
 - [x] `pnpm typecheck`
 - [x] `pnpm build`
 
-## Phase 06G — Valibot RPC Request Inference
+## Phase 06G — Valibot RPC Request Inference ✅ DONE
 
 ### Why
 
@@ -201,19 +201,19 @@ inputs so the server remains the single source of truth for both request and res
 
 ### Tasks
 
-- [ ] Add or reuse Valibot middleware for Hono route validation.
-- [ ] Validate `POST /api/auth/sign-up` with a route-local Valibot schema.
-- [ ] Validate `PATCH /api/users/:id` with the existing `userSchemas.patch` schema.
-- [ ] Validate `PATCH /api/translations/:domain/:id` with the domain-specific translation patch
+- [x] Add or reuse Valibot middleware for Hono route validation.
+- [x] Validate `POST /api/auth/sign-up` with a route-local Valibot schema.
+- [x] Validate `PATCH /api/users/:id` with a route-local Valibot schema for editable user fields.
+- [x] Validate `PATCH /api/translations/:domain/:id` with the domain-specific translation patch
       schemas.
-- [ ] Remove client-side Hono RPC request casts once request bodies infer correctly.
-- [ ] Keep Auth.js wildcard routes as explicit exceptions where Hono RPC typing is not useful.
+- [x] Remove client-side Hono RPC request casts once request bodies infer correctly.
+- [x] Keep Auth.js wildcard routes as explicit exceptions where Hono RPC typing is not useful.
 
 ### Validation
 
-- [ ] `pnpm --filter @workspace/server typecheck`
-- [ ] `pnpm --filter @workspace/client typecheck`
-- [ ] `pnpm build`
+- [x] `pnpm --filter @workspace/server typecheck`
+- [x] `pnpm --filter @workspace/client typecheck`
+- [x] `pnpm build`
 
 ## Deferred
 
