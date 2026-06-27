@@ -42,6 +42,7 @@
     "@auth/core": "^0.34.0",
     "@hono/auth-js": "^1.0.17",
     "@hono/node-server": "^1.19.0",
+    "@hono/standard-validator": "^0.2.0",
     "@scalar/hono-api-reference": "^0.10.19",
     "@workspace/config": "workspace:*",
     "better-sqlite3": "^11.9.0",

@@ -27,10 +27,10 @@
   },
   "scripts": {
     "---------- DEV_AND_BUILD": "---------------------------------------------",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev --filter=@workspace/client --filter=@workspace/server",
     "dev:reset": "run-s reset",
     "dev:db:reset": "run-s db:reset",
-    "start": "turbo run start --parallel",
+    "start": "turbo run start --filter=@workspace/client --filter=@workspace/server",
     "build": "turbo run build",
     "test": "turbo run test",
     "·········· LINTING": "···················································",
