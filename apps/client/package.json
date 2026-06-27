@@ -22,6 +22,8 @@
     "@emotion/css": "^11.13.5",
     "@emotion/react": "^11.14.0",
     "@finografic/design-system": "^1.18.2",
+    "@tanstack/react-query": "^5.101.1",
+    "hono": "^4.12.27",
     "i18next": "^26.3.0",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-http-backend": "^4.0.0",
@@ -35,10 +37,10 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0",
+    "@vitejs/plugin-react": "^6.0.3",
     "concurrently": "^9.2.1",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10",
+    "vite": "^8.1.0",
     "vitest": "^4.0.18"
   }
 }

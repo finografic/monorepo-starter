@@ -1,29 +1,23 @@
 import { authHandler } from '@hono/auth-js';
 import { db } from 'db';
+import { user } from 'db/schemas';
 import { eq } from 'drizzle-orm';
 import { env } from 'env.server';
 import { describeRoute } from 'hono-openapi';
 import { rateLimit } from 'middlewares/rate-limit';
 
-import { createRouter } from 'lib/create-app';
 import { hashPassword } from 'utils/password.utils';
 
-import { user } from '../../db/schemas';
+import type { AppContext } from 'types/app.types';
 
 const { COOKIES, COOKIE_DELETE_ATTRIBUTES } = env;
 
-const signUpRateLimit = rateLimit({ limit: 5, windowMs: 60_000 });
-const signInRateLimit = rateLimit({ limit: 10, windowMs: 60_000 });
+export const signUpRateLimit = rateLimit({ limit: 5, windowMs: 60_000 });
+export const signInRateLimit = rateLimit({ limit: 10, windowMs: 60_000 });
 
-const router = createRouter();
-
-// ======================================================
-// POST /auth/sign-up — custom registration
-// ======================================================
-
-router.post(
-  '/auth/sign-up',
-  describeRoute({
+export const signUp = {
+  path: '/sign-up' as const,
+  middleware: describeRoute({
     tags: ['auth'],
     summary: 'Register a new account',
     description: 'Creates a new user with role=user. Rate-limited to 5 requests per minute per IP.',
@@ -34,8 +28,7 @@ router.post(
       429: { description: 'Rate limit exceeded' },
     },
   }),
-  signUpRateLimit,
-  async (c) => {
+  handler: async (c: AppContext) => {
     try {
       const { email, password, name } = await c.req.json<{
         email: string;
@@ -89,21 +82,17 @@ router.post(
       return c.json({ error: 'INTERNAL_ERROR', message: 'Registration failed' }, 500);
     }
   },
-);
+};
 
-// ======================================================
-// POST /auth/clear-all-cookies — dev/debug helper
-// ======================================================
-
-router.post(
-  '/auth/clear-all-cookies',
-  describeRoute({
+export const clearAllCookies = {
+  path: '/clear-all-cookies' as const,
+  middleware: describeRoute({
     tags: ['auth'],
     summary: 'Clear all auth cookies',
     description: 'Debug helper — clears all known auth cookie variants.',
     responses: { 200: { description: 'Cookies cleared' } },
   }),
-  async (c) => {
+  handler: (c: AppContext) => {
     const response = c.json({ success: true, message: 'All cookies cleared' });
 
     const cookieNames = [
@@ -130,20 +119,9 @@ router.post(
 
     return response;
   },
-);
+};
 
-// ======================================================
-// Auth.js handler — all standard auth routes:
-//   GET  /auth/session
-//   GET  /auth/csrf
-//   GET  /auth/providers
-//   GET  /auth/signin
-//   POST /auth/signin/:provider
-//   POST /auth/callback/:provider
-//   POST /auth/signout
-// ======================================================
-
-router.use('/auth/signin/*', signInRateLimit);
-router.use('/auth/*', authHandler());
-
-export default router;
+export const authJs = {
+  path: '/*' as const,
+  handler: authHandler(),
+};

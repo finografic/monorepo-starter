@@ -3,19 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     }
   },
   "scripts": {
     "---------- DEV_AND_BUILD": "---------------------------------------------",
     "dev": "tsx watch src/index.ts",
     "build": "tsdown",
-    "start": "node dist/index.js",
+    "start": "node dist/index.mjs",
     "·········· CLEAN": "·····················································",
     "clean": "pnpm --package=@finografic/project-scripts dlx purge-builds --detach",
     "·········· LINTING": "···················································",

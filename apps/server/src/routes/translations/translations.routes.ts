@@ -11,13 +11,11 @@ import { eq } from 'drizzle-orm';
 import { describeRoute } from 'hono-openapi';
 import * as v from 'valibot';
 
-import { createRouter } from 'lib/create-app';
 import { requireAuth } from 'lib/require-auth';
 import { requireRole } from 'lib/require-role';
 
-const router = createRouter();
+import type { AppContext } from 'types/app.types';
 
-// sqliteBooleanField() normalises to 0|1; Drizzle .set() expects boolean
 function normalisePatch(patch: {
   isActive?: 0 | 1 | undefined;
   key?: string | undefined;
@@ -31,14 +29,9 @@ function normalisePatch(patch: {
   };
 }
 
-// ======================================================
-// PATCH /api/translations/:domain/:id — admin, update
-// translation entry (key, translations map, isActive)
-// ======================================================
-
-router.patch(
-  '/translations/:domain/:id',
-  describeRoute({
+export const update = {
+  path: '/:domain/:id' as const,
+  middleware: describeRoute({
     tags: ['translations'],
     summary: 'Update a translation entry',
     description: 'Admin only. Updates key, translations map, or isActive for a single entry.',
@@ -50,10 +43,12 @@ router.patch(
       404: { description: 'Entry not found' },
     },
   }),
-  requireAuth(),
-  requireRole('admin'),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const { domain, id } = c.req.param();
+    if (!id) {
+      return c.json({ error: 'VALIDATION_ERROR', message: 'Translation id is required' }, 400);
+    }
+
     const body = await c.req.json<unknown>();
 
     switch (domain) {
@@ -94,6 +89,6 @@ router.patch(
         return c.json({ error: 'VALIDATION_ERROR', message: `Unknown domain: ${domain}` }, 400);
     }
   },
-);
+};
 
-export default router;
+export const requireAdmin = [requireAuth(), requireRole('admin')] as const;

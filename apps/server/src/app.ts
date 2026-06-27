@@ -5,12 +5,12 @@ import { getAuthConfig } from './lib/auth';
 import { configureOpenAPI } from './lib/configure-openapi';
 import { createApp } from './lib/create-app';
 
-import auth from './routes/auth/auth.route';
-import demo from './routes/demo/demo.route';
-import health from './routes/health/health.route';
-import i18n from './routes/i18n/i18n.route';
-import translations from './routes/translations/translations.route';
-import users from './routes/users/users.route';
+import { authRouter } from './routes/auth';
+import { healthRouter } from './routes/health';
+import { i18nRouter } from './routes/i18n';
+import { indexRouter } from './routes/index.route';
+import { translationsRouter } from './routes/translations';
+import { usersRouter } from './routes/users';
 
 const app = createApp();
 
@@ -25,12 +25,16 @@ app.use(
 
 app.use('*', initAuthConfig(getAuthConfig));
 
-const routes = [health, demo, auth, i18n, users, translations] as const;
+export const appWithRoutes = app
+  .route('/', indexRouter)
+  .route('/api/health', healthRouter)
+  .route('/api/auth', authRouter)
+  .route('/api/i18n', i18nRouter)
+  .route('/api/users', usersRouter)
+  .route('/api/translations', translationsRouter);
 
-routes.forEach((route) => {
-  app.route('/api', route);
-});
+configureOpenAPI(appWithRoutes);
 
-configureOpenAPI(app);
+export type AppType = typeof appWithRoutes;
 
-export default app;
+export default appWithRoutes;

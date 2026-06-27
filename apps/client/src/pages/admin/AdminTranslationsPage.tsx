@@ -1,39 +1,17 @@
 import { Button, Spinner, TabsDS } from '@finografic/design-system';
 import { css } from '@styled-system/css';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslationDomains, useUpdateTranslation } from 'queries/translations';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-type Domain = 'ui' | 'app' | 'admin';
-
-interface TranslationRow {
-  id: string;
-  key: string;
-  translations: Record<string, string> | null;
-  isActive: boolean | number;
-}
+import type { TranslationDomain, TranslationRow } from 'queries/translations';
 
 const LANGUAGES = ['en-GB', 'es-ES'];
 
-function TranslationDomainTable({ domain }: { domain: Domain }) {
-  const [rows, setRows] = useState<TranslationRow[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+function TranslationDomainTable({ domain }: { domain: TranslationDomain }) {
+  const rowsQuery = useTranslationDomains(domain);
+  const updateTranslation = useUpdateTranslation();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
-  const [savingId, setSavingId] = useState<string | null>(null);
-
-  const fetchRows = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`/api/i18n/translations/${domain}`, { credentials: 'include' });
-      if (res.ok) setRows((await res.json()) as TranslationRow[]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [domain]);
-
-  useEffect(() => {
-    void fetchRows();
-  }, [fetchRows]);
 
   const startEdit = (row: TranslationRow) => {
     setEditingId(row.id);
@@ -41,25 +19,11 @@ function TranslationDomainTable({ domain }: { domain: Domain }) {
   };
 
   const saveEdit = async (id: string) => {
-    setSavingId(id);
-    try {
-      const res = await fetch(`/api/translations/${domain}/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ translations: draft }),
-        credentials: 'include',
-      });
-      if (res.ok) {
-        const updated = (await res.json()) as TranslationRow;
-        setRows((prev) => prev.map((r) => (r.id === id ? updated : r)));
-        setEditingId(null);
-      }
-    } finally {
-      setSavingId(null);
-    }
+    await updateTranslation.mutateAsync({ domain, id, translations: draft });
+    setEditingId(null);
   };
 
-  if (isLoading) {
+  if (rowsQuery.isLoading) {
     return (
       <div className={css({ display: 'flex', justifyContent: 'center', py: '8' })}>
         <Spinner />
@@ -67,9 +31,17 @@ function TranslationDomainTable({ domain }: { domain: Domain }) {
     );
   }
 
+  if (rowsQuery.error) {
+    return (
+      <p className={css({ fontSize: 'sm', color: 'fg.error' })}>
+        {rowsQuery.error instanceof Error ? rowsQuery.error.message : 'Failed to load translations'}
+      </p>
+    );
+  }
+
   return (
     <div className={css({ display: 'flex', flexDir: 'column', gap: '2' })}>
-      {rows.map((row) => (
+      {(rowsQuery.data ?? []).map((row) => (
         <div
           key={row.id}
           className={css({
@@ -136,7 +108,7 @@ function TranslationDomainTable({ domain }: { domain: Domain }) {
                 <Button
                   size="xs"
                   palette="primary"
-                  loading={savingId === row.id}
+                  loading={updateTranslation.isPending && updateTranslation.variables.id === row.id}
                   onClick={() => void saveEdit(row.id)}
                 >
                   Save

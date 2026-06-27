@@ -16,6 +16,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {
+        'context': resolve('src/context'),
+        'lib': resolve('src/lib'),
+        'providers': resolve('src/providers'),
+        'queries': resolve('src/queries'),
         '@styled-system/styles.css': resolve('styled-system/styles.css'),
         '@styled-system/css': resolve('styled-system/css'),
         '@styled-system/jsx': resolve('styled-system/jsx'),

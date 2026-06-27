@@ -1,17 +1,10 @@
 import { Badge, DataTable, Spinner } from '@finografic/design-system';
 import type { DataTableColumn } from '@finografic/design-system';
 import { css } from '@styled-system/css';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useUpdateUser, useUsers } from 'queries/users';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-
-interface UserRow {
-  id: string;
-  name: string;
-  email: string;
-  role: 'public' | 'user' | 'admin';
-  emailVerified: boolean;
-  createdAt: string | null;
-}
+import type { UserRole, UserRow } from 'queries/users';
 
 const ROLE_PALETTE: Record<UserRow['role'], 'danger' | 'primary' | 'neutral'> = {
   admin: 'danger',
@@ -33,7 +26,7 @@ const selectClass = css({
 interface RoleCellProps {
   user: UserRow;
   updatingId: string | null;
-  onUpdateRole: (id: string, role: UserRow['role']) => void;
+  onUpdateRole: (id: string, role: UserRole) => void;
 }
 
 function RoleCell({ user: userRow, updatingId, onUpdateRole }: RoleCellProps) {
@@ -56,47 +49,9 @@ function RoleCell({ user: userRow, updatingId, onUpdateRole }: RoleCellProps) {
 
 export function AdminUsersPage(): React.JSX.Element {
   const { t } = useTranslation();
-  const [users, setUsers] = useState<UserRow[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [updatingId, setUpdatingId] = useState<string | null>(null);
-
-  const fetchUsers = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await fetch('/api/users', { credentials: 'include' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = (await res.json()) as UserRow[];
-      setUsers(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load users');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void fetchUsers();
-  }, [fetchUsers]);
-
-  const updateRole = useCallback(async (id: string, role: UserRow['role']) => {
-    setUpdatingId(id);
-    try {
-      const res = await fetch(`/api/users/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role }),
-        credentials: 'include',
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const updated = (await res.json()) as UserRow;
-      setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, role: updated.role } : u)));
-    } catch (err) {
-      console.error('Failed to update role:', err);
-    } finally {
-      setUpdatingId(null);
-    }
-  }, []);
+  const usersQuery = useUsers();
+  const updateUser = useUpdateUser();
+  const updatingId = updateUser.isPending ? updateUser.variables.id : null;
 
   const columns = useMemo<Array<DataTableColumn<UserRow>>>(
     () => [
@@ -115,7 +70,7 @@ export function AdminUsersPage(): React.JSX.Element {
           <RoleCell
             user={row.original}
             updatingId={updatingId}
-            onUpdateRole={(id, role) => void updateRole(id, role)}
+            onUpdateRole={(id, role) => updateUser.mutate({ id, role })}
           />
         ),
       },
@@ -138,7 +93,7 @@ export function AdminUsersPage(): React.JSX.Element {
         },
       },
     ],
-    [t, updatingId, updateRole],
+    [t, updatingId, updateUser],
   );
 
   return (
@@ -150,15 +105,19 @@ export function AdminUsersPage(): React.JSX.Element {
         {t('admin.pages.users.subtitle', 'Manage accounts and roles')}
       </p>
 
-      {error && <p className={css({ fontSize: 'sm', color: 'fg.error', mb: '4' })}>{error}</p>}
+      {usersQuery.error && (
+        <p className={css({ fontSize: 'sm', color: 'fg.error', mb: '4' })}>
+          {usersQuery.error instanceof Error ? usersQuery.error.message : 'Failed to load users'}
+        </p>
+      )}
 
-      {isLoading ? (
+      {usersQuery.isLoading ? (
         <div className={css({ display: 'flex', justifyContent: 'center', py: '12' })}>
           <Spinner />
         </div>
       ) : (
         <DataTable
-          data={users}
+          data={usersQuery.data ?? []}
           columns={columns}
           classNames={{ table: {} }}
           emptyMessage={t('admin.users.empty', 'No users found')}

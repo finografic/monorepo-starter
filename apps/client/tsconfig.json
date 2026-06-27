@@ -6,9 +6,21 @@
     "jsxImportSource": "@emotion/react",
     "types": ["vite/client"],
     "paths": {
+      "context/*": ["./src/context/*"],
+      "lib/api": ["./src/lib/api"],
+      "lib/*": ["../server/src/lib/*"],
+      "providers/*": ["./src/providers/*"],
+      "queries/*": ["./src/queries/*"],
       "@styled-system/*": ["./styled-system/*"],
       "@styled-system/css": ["./styled-system/css"],
-      "@styled-system/jsx": ["./styled-system/jsx"]
+      "@styled-system/jsx": ["./styled-system/jsx"],
+      "env.server": ["../server/env.server"],
+      "db": ["../server/src/db"],
+      "db/*": ["../server/src/db/*"],
+      "middlewares/*": ["../server/src/middlewares/*"],
+      "routes/*": ["../server/src/routes/*"],
+      "types/*": ["../server/src/types/*"],
+      "utils/*": ["../server/src/utils/*"]
     }
   },
   "include": ["src"],

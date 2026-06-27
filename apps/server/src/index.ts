@@ -5,6 +5,8 @@ import pc from 'picocolors';
 
 import app from './app';
 
+export type { AppType } from './app';
+
 const PORT = env.API_PORT;
 
 function getLanIp(): string | null {

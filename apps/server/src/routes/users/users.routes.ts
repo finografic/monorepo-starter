@@ -5,19 +5,14 @@ import { eq } from 'drizzle-orm';
 import { describeRoute } from 'hono-openapi';
 import * as v from 'valibot';
 
-import { createRouter } from 'lib/create-app';
 import { requireAuth } from 'lib/require-auth';
 import { requireRole } from 'lib/require-role';
 
-const router = createRouter();
+import type { AppContext } from 'types/app.types';
 
-// ======================================================
-// GET /api/users — admin-only, full user list
-// ======================================================
-
-router.get(
-  '/users',
-  describeRoute({
+export const list = {
+  path: '/' as const,
+  middleware: describeRoute({
     tags: ['users'],
     summary: 'List all users',
     description: 'Returns all user accounts. Requires admin role.',
@@ -27,9 +22,7 @@ router.get(
       403: { description: 'Not authorised' },
     },
   }),
-  requireAuth(),
-  requireRole('admin'),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const users = await db
       .select({
         id: user.id,
@@ -44,16 +37,11 @@ router.get(
 
     return c.json(users, 200);
   },
-);
+};
 
-// ======================================================
-// PATCH /api/users/:id — admin updates any field;
-// user can only update their own name
-// ======================================================
-
-router.patch(
-  '/users/:id',
-  describeRoute({
+export const update = {
+  path: '/:id' as const,
+  middleware: describeRoute({
     tags: ['users'],
     summary: 'Update a user',
     description: 'Admin can update any field. A user may only update their own name.',
@@ -65,9 +53,10 @@ router.patch(
       404: { description: 'User not found' },
     },
   }),
-  requireAuth(),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const { id } = c.req.param();
+    if (!id) return c.json({ error: 'VALIDATION_ERROR', message: 'User id is required' }, 400);
+
     const authUser = await getAuthUser(c);
 
     const requestingId = authUser?.session?.user?.id;
@@ -96,15 +85,11 @@ router.patch(
 
     return c.json({ id: updated.id, name: updated.name, email: updated.email, role: updated.role }, 200);
   },
-);
+};
 
-// ======================================================
-// DELETE /api/users/:id — admin-only
-// ======================================================
-
-router.delete(
-  '/users/:id',
-  describeRoute({
+export const remove = {
+  path: '/:id' as const,
+  middleware: describeRoute({
     tags: ['users'],
     summary: 'Delete a user',
     description: 'Permanently removes a user account. Requires admin role.',
@@ -115,14 +100,15 @@ router.delete(
       404: { description: 'User not found' },
     },
   }),
-  requireAuth(),
-  requireRole('admin'),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const { id } = c.req.param();
+    if (!id) return c.json({ error: 'VALIDATION_ERROR', message: 'User id is required' }, 400);
+
     const [deleted] = await db.delete(user).where(eq(user.id, id)).returning({ id: user.id });
     if (!deleted) return c.json({ error: 'NOT_FOUND', message: 'User not found' }, 404);
     return c.json({ success: true }, 200);
   },
-);
+};
 
-export default router;
+export const requireAdmin = [requireAuth(), requireRole('admin')] as const;
+export const requireUser = requireAuth();

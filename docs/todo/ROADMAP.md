@@ -74,3 +74,4 @@ Detailed execution lives in:
 | 2026-05-27 | Phase 04D complete — auth guards, admin CRUD routes, full client UI          |
 | 2026-05-27 | Phase 04E complete — DS/Panda config verified; build + typecheck all green   |
 | 2026-05-27 | Phase 05 complete — pino logging, OpenAPI/Scalar, error envelope, rate limit |
+| 2026-06-28 | Phase 06 complete — Vite 8, Hono RPC, TanStack Query, route-tree migration   |

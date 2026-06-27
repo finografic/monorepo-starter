@@ -82,7 +82,7 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 - This is a selective-extraction monorepo starter based on touch-monorepo; intentionally beyond bare-bones (auth, admin/CMS, Drizzle, i18n) and also a GitHub demo/portfolio piece.
 - `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
 - Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
-- `apps/client`: Vite 7 + React 19 + react-router-dom; dev on port 3000, proxies `/api` → server. `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
+- `apps/client`: Vite 8 + React 19 + react-router-dom; dev on port 3000, proxies `/api` → server. `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
 - `@workspace/config`: Valibot env validation + dotenv with root-dir auto-discovery + workspace paths; hosts `db-setup.config.ts`.
 - Each app has a local `oxlint.config.ts` importing presets from `@finografic/oxc-config/oxlint`.
 - Root `package.json` does NOT set `"type": "module"` — each sub-package declares its own.
@@ -101,6 +101,7 @@ This project has a knowledge graph at graphify-out/ with god nodes, community st
 When the user types `/graphify`, invoke the `skill` tool with `skill: "graphify"` before doing anything else.
 
 Rules:
+
 - For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
 - Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
 - If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.

@@ -1,121 +1,121 @@
-# LLAAB Client — Vite + React Router Guide
+# Client Guide — Vite + React Router
 
-> Quick reference for the `apps/client` SPA after the Astro migration (2026-06-12).
+> Quick reference for the `apps/client` SPA after the Phase 06 LLAAB-pattern migration.
 
 ## Stack
 
-| Layer   | Choice                                   |
-| ------- | ---------------------------------------- |
-| Bundler | Vite 8                                   |
-| UI      | React 19 + shadcn (`packages/ui`)        |
-| Router  | React Router v7 (`createBrowserRouter`)  |
-| Data    | TanStack Query + Hono RPC (`lib/api.ts`) |
-| Styles  | Tailwind 4 + `src/styles/app.css` tokens |
+| Layer   | Choice                                      |
+| ------- | ------------------------------------------- |
+| Bundler | Vite 8                                      |
+| UI      | React 19 + `@finografic/design-system` now  |
+| Router  | React Router v7 with `createBrowserRouter`  |
+| Data    | TanStack Query + Hono RPC via `src/lib/api` |
+| Styles  | Panda CSS + design-system preset now        |
 
-## Project layout
+Tailwind 4, shadcn, and `packages/ui` are intentionally deferred. See
+`docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md` for the later shadcn migration notes.
+
+## Project Layout
 
 ```text
 apps/client/
-  index.html              # SPA shell
-  vite.config.ts          # aliases, /api proxy, envDir → repo root
+  index.html
+  vite.config.ts
   src/
-    main.tsx              # QueryClientProvider + RouterProvider + Toaster
-    router.tsx            # route tree
-    routes/               # page components (one file per route)
-    layouts/              # AppLayout, PageLayout, PageDetail, PageList
-    components/           # shared UI (NavMenu, VaultBrowser, …)
-    forms/  dialogs/  tables/   # feature modules
-    queries/              # TanStack Query hooks
-    lib/api.ts            # typed Hono client
+    main.tsx                    # root providers
+    App.tsx                     # RouterProvider + dev-only CSS smoke marker
+    router.tsx                  # createBrowserRouter route tree
+    components/                 # shared client components
+    context/                    # AuthProvider / useAuth
+    layout/                     # public and admin layout shells
+    pages/                      # route page components
+    providers/
+      QueryClientProvider/      # TanStack Query client provider
+    queries/                    # TanStack Query hooks
+    lib/api.ts                  # typed Hono RPC client
+    styles/theme.css            # Panda/design-system layer setup
 ```
 
-## Adding a route
+## Providers
 
-1. Create `src/routes/my-page.tsx` using `PageLayout` / `PageHero` as needed.
-2. Register in `src/router.tsx` with optional `handle: { title: '…' }` for the app header.
-3. For vault routes, nest under the `VaultLayout` branch (session loader redirects to login).
+`main.tsx` owns global provider order:
 
-## Route left sidebars
+1. `I18nextProvider`
+2. `QueryClientProvider`
+3. `AuthProvider`
+4. `App`
 
-`AppLayout` owns the physical app sidebars. Routes that need a left sidebar should inject their
-sidebar content into the global shell with `useAppLeftSidebar`, instead of creating a nested local
-split layout.
+Put future app-wide providers under `src/providers/` rather than expanding `main.tsx` with inline
+setup logic.
 
-```tsx
-import { useAppLeftSidebar } from 'layouts/AppLayout/AppLeftSidebarContext';
-import { useMemo } from 'react';
+## Adding a Route
 
-export function MyRoute() {
-  const sidebar = useMemo(
-    () => ({
-      id: 'my-route',
-      content: <MyRouteSidebar />,
-      defaultOpen: true,
-      minWidth: '420px',
-      maxWidth: '560px',
-      defaultWidth: '480px',
-    }),
-    [],
-  );
+1. Create a page component under `src/pages/`.
+2. Register it in `src/router.tsx`.
+3. Use `Layout` for public/authenticated routes or `AdminLayout` for admin routes.
+4. Wrap protected route elements with `ProtectedRoute`.
 
-  useAppLeftSidebar(sidebar);
+Route guards currently remain component wrappers. Move them to React Router loaders only if that
+becomes useful after the query/auth layer settles.
 
-  return <MyRouteDetail />;
-}
+## Data Fetching
+
+Use query hooks under `src/queries/*`. Do not call `fetch('/api/...')` directly from pages when a
+typed Hono RPC route is available.
+
+Current query groups:
+
+| Query group     | Purpose                           |
+| --------------- | --------------------------------- |
+| `users/`        | Admin user list and role updates  |
+| `translations/` | Translation CMS lists and updates |
+
+`src/lib/api.ts` exports the typed Hono RPC client:
+
+```ts
+import { api } from 'lib/api';
+
+const res = await api.users.$get();
 ```
 
-The left-sidebar toggle in the secondary action bar only appears while the current route has
-registered sidebar content. `AppLayout` handles resize, collapse, default-open behavior, and cleanup
-when the route unmounts. `/vault/transcripts` is the reference implementation: its transcript list is
-registered as route-owned left-sidebar content while the transcript detail remains the route body.
+Auth.js credential callback helpers remain in `src/lib/auth-client.ts` because Auth.js wildcard
+routes are not a great fit for Hono RPC typing.
 
-## Data fetching
+## Auth
 
-Use query hooks under `queries/*` — never import `@llaab/core` or `@llaab/ingestion` in the
-client bundle. Vault lists use `useVaultNodes({ type: 'source' })`; mutations call `api.vault.*`
-with `credentials: 'include'` (configured in `lib/api.ts` and `lib/api-client.ts`).
+This starter uses DB-backed Auth.js/session auth. Do not copy LLAAB's basic password auth.
 
-## LLM provider routing
+The client auth boundary is:
 
-`/llm` edits persisted task routing from `configs/llm-routing.json`. The route displays
-provider-qualified model options so similarly named models stay distinct:
+- `src/lib/auth-client.ts` for CSRF-aware Auth.js calls.
+- `src/context/AuthContext.tsx` for auth state and page-facing actions.
+- `src/components/ProtectedRoute.tsx` for route protection.
 
-- `(Ollama) <model>` from Ollama on `:11434`
-- `(LM Studio) <model>` from LM Studio's OpenAI-compatible server on `:1234`
-- `(Anthropic) <model>` for remote routes
+## Dev
 
-The provider prefix is muted in the select label. Saving a task route persists both `provider` and
-`model`; server-side `routeLlm(...)` dispatches to the selected provider. LM Studio uses
-`LLAAB_LMSTUDIO_BASE_URL` when set, otherwise `http://localhost:1234/v1`.
+| Mode       | Client URL              | API proxy               |
+| ---------- | ----------------------- | ----------------------- |
+| `pnpm dev` | `http://localhost:3000` | Vite proxy → `API_PORT` |
 
-## Vault auth
+Run both apps from the repo root with:
 
-- Login: `POST /api/vault/auth/login` → httpOnly `vault_key` cookie (server only).
-- Session: `GET /api/vault/auth/session` — used by `vaultSessionLoader` on `/vault/*`.
-- Logout: `GET /api/vault/auth/logout`.
-
-## Dev vs production
-
-| Mode       | Client URL                    | API                           |
-| ---------- | ----------------------------- | ----------------------------- |
-| `pnpm dev` | `http://127.0.0.1:3000`       | Vite proxy → `:8888`          |
-| launchd    | `http://llaab.localhost:3000` | `vite dev` or preview + proxy |
-
-Run server separately: `pnpm --filter @llaab/server dev`.
+```sh
+pnpm dev
+```
 
 ## Styling
 
-- **CSS modules:** `import styles from './Foo.module.css'` — access as `styles.className`.
-- **Global detail utilities:** `styles/page-detail.css` (`.section`, `.meta-grid`, `.badge`, …).
-- **Tokens:** shadcn CSS vars + LLAAB tokens in `styles/app.css`.
+Current styling is Panda CSS with `@finografic/design-system`.
 
-## Common pitfalls
+- Import generated Panda styles from `@styled-system/styles.css`.
+- Keep design-system/Panda aliases in both `vite.config.ts` and `tsconfig.json`.
+- Use valid semantic tokens such as `bg`, `fg`, `border`, `accent`, `accent.subtle`, and `fg.error`.
 
-| Symptom                     | Fix                                                     |
-| --------------------------- | ------------------------------------------------------- |
-| API 401 on vault pages      | Log in at `/vault/login`; check cookie + server running |
-| QueryClient error           | Ensure component is under root provider in `main.tsx`   |
-| Alias not resolving in Vite | Add to `vite.config.ts` **and** `tsconfig.json` paths   |
-| OAuth / env vars missing    | `.env` at repo root; restart server after changes       |
+## Common Pitfalls
 
-See also: [`docs/todo/DONE_CLIENT_VITE_MIGRATION.md`](../../docs/todo/DONE_CLIENT_VITE_MIGRATION.md).
+| Symptom                     | Fix                                                    |
+| --------------------------- | ------------------------------------------------------ |
+| QueryClient error           | Ensure the component is under `QueryClientProvider`    |
+| API client type missing     | Build `@workspace/server` so `dist/index.d.mts` exists |
+| Alias not resolving in Vite | Add it to `vite.config.ts` and `tsconfig.json`         |
+| Auth session missing        | Check `/api/auth/session`, cookies, and server logs    |

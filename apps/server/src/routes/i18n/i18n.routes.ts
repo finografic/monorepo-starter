@@ -1,7 +1,7 @@
 import { db } from 'db';
 import { describeRoute } from 'hono-openapi';
 
-import { createRouter } from 'lib/create-app';
+import type { AppContext } from 'types/app.types';
 
 function buildDomainGroupedResources(
   uiRows: Array<{ key: string; translations: Record<string, string> | null }>,
@@ -42,13 +42,9 @@ function buildDomainGroupedResources(
   return result;
 }
 
-const router = createRouter();
-
-// GET /api/i18n/:namespace?lng=en-GB
-// Returns all domains grouped under { ui, app, admin } for i18next bulk load
-router.get(
-  '/i18n/:namespace',
-  describeRoute({
+export const bundle = {
+  path: '/:namespace' as const,
+  middleware: describeRoute({
     tags: ['i18n'],
     summary: 'Load translation bundle',
     description: 'Returns all active translations grouped by domain for i18next backend.',
@@ -56,7 +52,7 @@ router.get(
       200: { description: 'Translation bundle' },
     },
   }),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const { namespace } = c.req.param();
     const lng = c.req.query('lng') ?? 'en-GB';
 
@@ -73,13 +69,11 @@ router.get(
     const resources = buildDomainGroupedResources(uiRows, appRows, adminRows, lng);
     return c.json(resources, 200);
   },
-);
+};
 
-// GET /api/i18n/translations/:domain?lng=en-GB
-// Returns single domain array for CMS editing
-router.get(
-  '/i18n/translations/:domain',
-  describeRoute({
+export const domainTranslations = {
+  path: '/translations/:domain' as const,
+  middleware: describeRoute({
     tags: ['i18n'],
     summary: 'List translations for a domain',
     description: 'Returns all active translation entries for the given domain (ui | app | admin).',
@@ -87,7 +81,7 @@ router.get(
       200: { description: 'Translation rows' },
     },
   }),
-  async (c) => {
+  handler: async (c: AppContext) => {
     const { domain } = c.req.param();
 
     interface TranslationRow {
@@ -114,6 +108,4 @@ router.get(
 
     return c.json(rows, 200);
   },
-);
-
-export default router;
+};

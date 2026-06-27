@@ -1,12 +1,10 @@
 import { describeRoute } from 'hono-openapi';
 
-import { createRouter } from '../../lib/create-app';
+import type { AppContext } from 'types/app.types';
 
-const router = createRouter();
-
-router.get(
-  '/health',
-  describeRoute({
+export const health = {
+  path: '/' as const,
+  middleware: describeRoute({
     tags: ['health'],
     summary: 'Health check',
     description: 'Returns 200 OK when the server is running.',
@@ -14,9 +12,7 @@ router.get(
       200: { description: 'Server is healthy' },
     },
   }),
-  (c) => {
+  handler: (c: AppContext) => {
     return c.json({ status: 'ok', timestamp: new Date().toISOString() });
   },
-);
-
-export default router;
+};
