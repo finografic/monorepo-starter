@@ -45,7 +45,10 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 ## Rules — Markdown Tables
 
 - Padded pipes: one space on each side of every `|`, including the separator row.
-- Align column widths so all cells in the same column are equal width.
+- **Do NOT manually align column widths or pad cells to equal width.** `oxfmt` (run automatically
+  by lint-staged on commit and by `pnpm format:fix`) fixes table alignment automatically. Spending
+  tokens counting characters and iterating on spacing is wasted effort — write the content, let the
+  formatter handle alignment.
 
 ---
 
@@ -82,13 +85,14 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 - This is a selective-extraction monorepo starter based on touch-monorepo; intentionally beyond bare-bones (auth, admin/CMS, Drizzle, i18n) and also a GitHub demo/portfolio piece.
 - `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
 - Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
-- `apps/client`: Vite 8 + React 19 + react-router-dom; dev on port 3000, proxies `/api` → server. `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
+- `apps/client`: Vite 8 + React 19 + React Router v7 + shadcn/Tailwind 4; dev on port 3000, proxies `/api` → server. `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
 - `@workspace/config`: Valibot env validation + dotenv with root-dir auto-discovery + workspace paths; hosts `db-setup.config.ts`.
 - Each app has a local `oxlint.config.ts` importing presets from `@finografic/oxc-config/oxlint`.
 - Root `package.json` does NOT set `"type": "module"` — each sub-package declares its own.
-- `packages/core` and `packages/shared` were intentionally skipped; `apps/` without `packages/` is valid (`@finografic/project-scripts` `findProjectRoot` needs `apps/` or `packages/`, not both).
+- `packages/ui` contains owned shadcn source components and Tailwind 4 globals, exported as `@workspace/ui/*`.
+- `packages/core` and `packages/shared` were intentionally skipped; `apps/` plus `packages/ui` is valid.
 - No deployment workflow — GitHub Pages removed as unsuitable for full-stack monorepo.
-- For selective extraction: use touch-monorepo for auth/server/db patterns; use cv-justin-rankin for Panda CSS + `@finografic/design-system` Vite setup.
+- For selective extraction: use touch-monorepo for auth/server/db patterns; use LLAAB and vite-monorepo for shadcn/Tailwind UI package patterns.
 - Root `db:reset` chains drop → migrate → `db:setup` via the `@finografic/project-scripts` `db-setup` CLI (`NODE_OPTIONS='--import tsx' db-setup -y`); do not duplicate a local db-setup script.
 - `config/db-setup.config.ts` seeds: `user`, `supported_languages`, `translations_ui`, `translations_app`, `translations_admin`; `viewConfigs` is empty (no SQL views). Seed files use underscore names matching schema exports.
 
