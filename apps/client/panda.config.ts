@@ -15,7 +15,21 @@ export default defineConfig({
   outdir: './styled-system',
   theme: {
     ...designSystemPreset.theme,
+    semanticTokens: {
+      ...designSystemPreset.theme?.semanticTokens,
+      colors: {
+        ...designSystemPreset.theme?.semanticTokens?.colors,
+        bg: {
+          ...designSystemPreset.theme?.semanticTokens?.colors?.bg,
+          hover: { value: { base: '{colors.grey.xlight}', _dark: '{colors.grey.xdark}' } },
+        },
+        danger: {
+          solid: { value: { base: '{colors.danger}', _dark: '{colors.danger.light}' } },
+        },
+      },
+    },
     extend: {
+      ...designSystemPreset.theme?.extend,
       tokens: {
         ...designSystemPreset.theme?.tokens,
         colors: createColorTokens({

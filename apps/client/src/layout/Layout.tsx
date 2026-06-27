@@ -12,8 +12,8 @@ function navLinkClass({ isActive }: { isActive: boolean }) {
     fontSize: 'sm',
     fontWeight: 'medium',
     textDecoration: 'none',
-    color: isActive ? 'colorPalette.default' : 'fg.muted',
-    _hover: { color: 'fg.default' },
+    color: isActive ? 'accent' : 'fg.muted',
+    _hover: { color: 'fg' },
   });
 }
 
@@ -28,7 +28,7 @@ export function Layout(): React.JSX.Element {
   };
 
   return (
-    <div className={css({ minH: '100dvh', display: 'flex', flexDir: 'column', bg: 'bg.canvas' })}>
+    <div className={css({ minH: '100dvh', display: 'flex', flexDir: 'column', bg: 'bg' })}>
       <header
         className={css({
           borderBottom: '1px solid',
@@ -48,7 +48,7 @@ export function Layout(): React.JSX.Element {
               textDecoration: 'none',
               fontWeight: 'bold',
               fontSize: 'sm',
-              color: 'fg.default',
+              color: 'fg',
             })}
           >
             monorepo-starter
@@ -91,7 +91,7 @@ export function Layout(): React.JSX.Element {
                 fontSize: 'sm',
                 fontWeight: 'medium',
                 borderRadius: 'md',
-                bg: 'colorPalette.default',
+                bg: 'accent',
                 color: 'white',
                 textDecoration: 'none',
                 _hover: { opacity: 0.9 },

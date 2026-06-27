@@ -68,7 +68,7 @@ export function LandingPage(): React.JSX.Element {
           {t('app.badge', 'Open-source starter')}
         </Badge>
 
-        <h1 className={css({ fontSize: '4xl', fontWeight: 'bold', color: 'fg.default' })}>
+        <h1 className={css({ fontSize: '4xl', fontWeight: 'bold', color: 'fg' })}>
           {t('app.title', 'monorepo-starter')}
         </h1>
 
@@ -86,22 +86,16 @@ export function LandingPage(): React.JSX.Element {
           })}
         >
           {isAuthenticated && role === 'admin' ? (
-            <Link to="/admin" className={ctaLink + ' ' + css({ bg: 'colorPalette.default', color: 'white' })}>
+            <Link to="/admin" className={ctaLink + ' ' + css({ bg: 'accent', color: 'accent.contrast' })}>
               {t('ui.nav.adminPanel', 'Admin Panel')}
             </Link>
           ) : isAuthenticated ? (
-            <Link
-              to="/dashboard"
-              className={ctaLink + ' ' + css({ bg: 'colorPalette.default', color: 'white' })}
-            >
+            <Link to="/dashboard" className={ctaLink + ' ' + css({ bg: 'accent', color: 'accent.contrast' })}>
               {t('ui.nav.dashboard', 'Go to Dashboard')}
             </Link>
           ) : (
             <>
-              <Link
-                to="/login"
-                className={ctaLink + ' ' + css({ bg: 'colorPalette.default', color: 'white' })}
-              >
+              <Link to="/login" className={ctaLink + ' ' + css({ bg: 'accent', color: 'accent.contrast' })}>
                 {t('ui.buttons.signIn', 'Sign In')}
               </Link>
               <a
@@ -113,8 +107,8 @@ export function LandingPage(): React.JSX.Element {
                   ' ' +
                   css({
                     border: '1px solid',
-                    borderColor: 'border.default',
-                    color: 'fg.default',
+                    borderColor: 'border',
+                    color: 'fg',
                     bg: 'bg.surface',
                   })
                 }

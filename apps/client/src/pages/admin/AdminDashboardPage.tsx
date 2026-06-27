@@ -11,7 +11,7 @@ export function AdminDashboardPage(): React.JSX.Element {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg.default' })}>
+      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg' })}>
         {t('admin.pages.dashboard.title', 'Dashboard')}
       </h1>
       <p className={css({ fontSize: 'sm', color: 'fg.muted', mt: '1', mb: '6' })}>

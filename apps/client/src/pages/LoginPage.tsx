@@ -63,15 +63,15 @@ export function LoginPage(): React.JSX.Element {
     py: '2',
     borderRadius: 'md',
     border: '1px solid',
-    borderColor: 'border.default',
+    borderColor: 'border',
     bg: 'bg.surface',
     fontSize: 'sm',
-    color: 'fg.default',
+    color: 'fg',
     outline: 'none',
     _focus: {
-      borderColor: 'colorPalette.default',
+      borderColor: 'accent',
       ring: '2px',
-      ringColor: 'colorPalette.subtle',
+      ringColor: 'accent.subtle',
     },
     _placeholder: { color: 'fg.subtle' },
   });
@@ -91,15 +91,13 @@ export function LoginPage(): React.JSX.Element {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        bg: 'bg.canvas',
+        bg: 'bg',
         p: '4',
       })}
     >
       <div className={css({ w: 'full', maxW: 'sm' })}>
         <div className={css({ textAlign: 'center', mb: '8' })}>
-          <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg.default' })}>
-            {t('app.title')}
-          </h1>
+          <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg' })}>{t('app.title')}</h1>
           <p className={css({ fontSize: 'sm', color: 'fg.muted', mt: '1' })}>
             {mode === 'signin'
               ? t('ui.common.signIn', 'Sign in to your account')
@@ -163,7 +161,7 @@ export function LoginPage(): React.JSX.Element {
                 />
               </div>
 
-              {error && <p className={css({ fontSize: 'sm', color: 'error.default' })}>{error}</p>}
+              {error && <p className={css({ fontSize: 'sm', color: 'fg.error' })}>{error}</p>}
 
               <Button type="submit" palette="primary" fullWidth loading={isLoading}>
                 {mode === 'signin'
@@ -183,7 +181,7 @@ export function LoginPage(): React.JSX.Element {
                   setError(null);
                 }}
                 className={css({
-                  color: 'colorPalette.default',
+                  color: 'accent',
                   fontWeight: 'medium',
                   cursor: 'pointer',
                   bg: 'transparent',

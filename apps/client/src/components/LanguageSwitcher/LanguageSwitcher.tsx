@@ -37,11 +37,11 @@ export function LanguageSwitcher(): React.JSX.Element {
             border: '1px solid',
             cursor: 'pointer',
             transition: 'all 0.15s ease',
-            borderColor: current === lng ? 'colorPalette.default' : 'transparent',
-            bg: current === lng ? 'colorPalette.default' : 'transparent',
+            borderColor: current === lng ? 'accent' : 'transparent',
+            bg: current === lng ? 'accent' : 'transparent',
             color: current === lng ? 'white' : 'inherit',
             _hover: {
-              borderColor: 'colorPalette.default',
+              borderColor: 'accent',
               opacity: current === lng ? 1 : 0.7,
             },
           })}

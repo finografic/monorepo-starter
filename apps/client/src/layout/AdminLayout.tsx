@@ -22,7 +22,7 @@ export function AdminLayout(): React.JSX.Element {
   };
 
   return (
-    <div className={css({ display: 'flex', minH: '100dvh', bg: 'bg.canvas' })}>
+    <div className={css({ display: 'flex', minH: '100dvh', bg: 'bg' })}>
       {/* Sidebar */}
       <aside
         className={css({
@@ -48,7 +48,7 @@ export function AdminLayout(): React.JSX.Element {
               className={css({
                 fontWeight: 'bold',
                 fontSize: 'sm',
-                color: 'colorPalette.default',
+                color: 'accent',
               })}
             >
               monorepo-starter
@@ -84,9 +84,9 @@ export function AdminLayout(): React.JSX.Element {
                   fontWeight: 'medium',
                   textDecoration: 'none',
                   transition: 'all 0.15s ease',
-                  bg: isActive ? 'colorPalette.subtle' : 'transparent',
-                  color: isActive ? 'colorPalette.default' : 'fg.muted',
-                  _hover: { bg: 'bg.muted', color: 'fg.default' },
+                  bg: isActive ? 'accent.subtle' : 'transparent',
+                  color: isActive ? 'accent' : 'fg.muted',
+                  _hover: { bg: 'bg.muted', color: 'fg' },
                 })
               }
             >

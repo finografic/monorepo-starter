@@ -25,7 +25,7 @@ const selectClass = css({
   py: '1',
   borderRadius: 'sm',
   border: '1px solid',
-  borderColor: 'border.default',
+  borderColor: 'border',
   bg: 'bg.surface',
   cursor: 'pointer',
 });
@@ -143,14 +143,14 @@ export function AdminUsersPage(): React.JSX.Element {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg.default' })}>
+      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg' })}>
         {t('admin.pages.users.title', 'Users')}
       </h1>
       <p className={css({ fontSize: 'sm', color: 'fg.muted', mt: '1', mb: '6' })}>
         {t('admin.pages.users.subtitle', 'Manage accounts and roles')}
       </p>
 
-      {error && <p className={css({ fontSize: 'sm', color: 'error.default', mb: '4' })}>{error}</p>}
+      {error && <p className={css({ fontSize: 'sm', color: 'fg.error', mb: '4' })}>{error}</p>}
 
       {isLoading ? (
         <div className={css({ display: 'flex', justifyContent: 'center', py: '12' })}>

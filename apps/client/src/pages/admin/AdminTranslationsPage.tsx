@@ -124,10 +124,10 @@ function TranslationDomainTable({ domain }: { domain: Domain }) {
                       py: '1',
                       borderRadius: 'sm',
                       border: '1px solid',
-                      borderColor: 'border.default',
-                      bg: 'bg.canvas',
+                      borderColor: 'border',
+                      bg: 'bg',
                       outline: 'none',
-                      _focus: { borderColor: 'colorPalette.default' },
+                      _focus: { borderColor: 'accent' },
                     })}
                   />
                 </div>
@@ -184,7 +184,7 @@ export function AdminTranslationsPage(): React.JSX.Element {
 
   return (
     <div>
-      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg.default' })}>
+      <h1 className={css({ fontSize: '2xl', fontWeight: 'bold', color: 'fg' })}>
         {t('admin.pages.translations.title', 'Translations')}
       </h1>
       <p className={css({ fontSize: 'sm', color: 'fg.muted', mt: '1', mb: '6' })}>
