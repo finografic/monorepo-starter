@@ -21,9 +21,12 @@ Detailed execution lives in:
 - [TODO — Phase 02 App Shell Extraction](/docs/todo/TODO_PHASE_02_APP_SHELL_EXTRACTION.md)
 - [TODO — Phase 03 Shared Platform Extraction](/docs/todo/TODO_PHASE_03_SHARED_PLATFORM_EXTRACTION.md)
 - [TODO — Phase 04 Data Auth and I18n](/docs/todo/TODO_PHASE_04_DATA_AUTH_AND_I18N.md)
+- [TODO — Phase 06 LLAAB Client/Server Patterns](/docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md)
 
 ## P0 — Active
 
+- Adopt the newer LLAAB client/server architecture patterns: Vite 8, Hono RPC, TanStack Query,
+  route-folder server structure, and React Router data-router setup. Detail: [TODO — Phase 06 LLAAB Client/Server Patterns](/docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md)
 - ~~Root monorepo bootstrap and planning docs.~~ **Complete.** Detail: [TODO — Phase 01 Root Bootstrap](/docs/todo/TODO_PHASE_01_ROOT_BOOTSTRAP.md)
 
 ## P1 — Next Up
@@ -40,6 +43,7 @@ Detailed execution lives in:
 - Add example tests and CI once the package graph stabilises.
 - Decide whether the starter should ship release/versioning automation or remain app-only.
 - Add a starter-focused example content/data set after the dashboard shell exists.
+- Tailwind 4, shadcn, and `packages/ui` styling migration after the data/router architecture lands.
 
 ## Non-starters
 
