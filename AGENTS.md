@@ -72,10 +72,11 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 - For `@finografic/design-system`, ship prebuilt `dist/` from CI in the npm tarball; do not commit `dist/` or use postinstall build scripts.
 - In this workspace, do not remove unused imports on save (`source.organizeImports: never`); sort only via `source.sortImports: explicit`. Keep `source.fixAll.oxc: explicit` for oxlint fixes without organize-imports cleanup.
 - Prefer adding missing imports on save (`source.addMissingImports: explicit`) and TypeScript auto-import suggestions while typing.
+- Use `:` as the segment separator in npm script names everywhere (e.g. `db:migrations:seed`, not `db.migrations.seed` or space-separated variants).
 
 ## Learned Workspace Facts
 
-- This is a selective-extraction monorepo starter based on `/Users/justin/repos-finografic/touch-monorepo`.
+- This is a selective-extraction monorepo starter based on touch-monorepo; intentionally beyond bare-bones (auth, admin/CMS, Drizzle, i18n) and also a GitHub demo/portfolio piece.
 - Internal packages use `@workspace/*` scope; external deps use their real npm scopes.
 - `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
 - Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
@@ -86,5 +87,6 @@ Shared across Claude Code, Cursor, and GitHub Copilot.
 - Root `package.json` does NOT set `"type": "module"` — each sub-package declares its own.
 - `packages/core` and `packages/shared` from source were evaluated and intentionally skipped.
 - No deployment workflow — GitHub Pages removed as unsuitable for full-stack monorepo.
+- For selective extraction: use touch-monorepo for auth/server/db patterns; use cv-justin-rankin for Panda CSS + `@finografic/design-system` Vite setup.
 
 ---

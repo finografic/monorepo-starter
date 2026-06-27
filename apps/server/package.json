@@ -25,7 +25,7 @@
     "db:reset": "pnpm db:drop && pnpm db:create && pnpm db:migrations:run",
     "db:reset:full": "pnpm db:drop && pnpm db:create && pnpm db:migrations:run && pnpm db:setup && pnpm db:views:create",
     "db:reset:with-data": "pnpm db:drop && pnpm db:create && pnpm db:migrations:run && pnpm db:setup",
-    "db:setup": "NODE_OPTIONS='--import tsx' db-setup",
+    "db:setup": "NODE_OPTIONS='--import tsx' db-setup -y",
     "·········· DB:UTILS": "··················································",
     "db:drop": "shx rm -rf ../data/*.sqlite.db",
     "db:create": "drizzle-kit push --config ./drizzle.config.ts",
@@ -35,7 +35,8 @@
     "db:migrations:run": "tsx src/db/utils/migrate.ts",
     "db:views:create": "tsx src/db/utils/create-view.ts all",
     "db:views:create:single": "tsx src/db/utils/create-view.ts",
-    "db:cleanup:short-keys": "tsx src/scripts/cleanup-short-keys.ts"
+    "db:cleanup:short-keys": "tsx src/scripts/cleanup-short-keys.ts",
+    "db:studio": "drizzle-kit studio --config ./drizzle.config.ts"
   },
   "dependencies": {
     "@auth/core": "^0.34.0",
