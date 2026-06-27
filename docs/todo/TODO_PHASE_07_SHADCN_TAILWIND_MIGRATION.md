@@ -11,13 +11,13 @@ generated light theme for this repo.
 
 ## Target Stack
 
-| Layer      | Choice                                             |
-| ---------- | -------------------------------------------------- |
-| UI package | `packages/ui` copied from LLAAB and renamed        |
-| Components | shadcn components exported as `@workspace/ui/*`    |
-| Styling    | Tailwind 4 + `@tailwindcss/vite`                   |
-| Theme      | shadcn preset `b7BE9nf27X` light-mode CSS tokens   |
-| Client CSS | global import from `@workspace/ui/globals.css`     |
+| Layer      | Choice                                           |
+| ---------- | ------------------------------------------------ |
+| UI package | `packages/ui` copied from LLAAB and renamed      |
+| Components | shadcn components exported as `@workspace/ui/*`  |
+| Styling    | Tailwind 4 + `@tailwindcss/vite`                 |
+| Theme      | shadcn preset `b7BE9nf27X` light-mode CSS tokens |
+| Client CSS | global import from `@workspace/ui/globals.css`   |
 
 ## Source References
 
@@ -53,53 +53,53 @@ Theme source for this repo:
 
 ### Tasks
 
-- [ ] Copy `/Users/justin/LLAAB/packages/ui` to `packages/ui`.
-- [ ] Remove copied `node_modules`, `.DS_Store`, build artifacts, and LLAAB-only package metadata.
-- [ ] Rename package from `@llaab/ui` to `@workspace/ui`.
-- [ ] Rewrite `packages/ui/package.json` exports for `@workspace/ui`.
-- [ ] Copy/adapt `/Users/justin/LLAAB/packages/ui/components.json`.
-- [ ] Copy/adapt `/Users/justin/LLAAB/apps/client/components.json` into `apps/client/components.json`.
-- [ ] Cross-check both copied `components.json` files against the clean generated repo.
-- [ ] Use `@workspace/ui` aliases from `vite-monorepo`, not LLAAB's `@llaab/ui` aliases.
+- [x] Copy `/Users/justin/LLAAB/packages/ui` to `packages/ui`.
+- [x] Remove copied `node_modules`, `.DS_Store`, build artifacts, and LLAAB-only package metadata.
+- [x] Rename package from `@llaab/ui` to `@workspace/ui`.
+- [x] Rewrite `packages/ui/package.json` exports for `@workspace/ui`.
+- [x] Copy/adapt `/Users/justin/LLAAB/packages/ui/components.json`.
+- [x] Copy/adapt `/Users/justin/LLAAB/apps/client/components.json` into `apps/client/components.json`.
+- [x] Cross-check both copied `components.json` files against the clean generated repo.
+- [x] Use `@workspace/ui` aliases from `vite-monorepo`, not LLAAB's `@llaab/ui` aliases.
 
 ### Validation
 
-- [ ] `pnpm install`
-- [ ] `pnpm --filter @workspace/ui typecheck`
+- [x] `pnpm install`
+- [x] `pnpm --filter @workspace/ui typecheck`
 
 ## Phase 07B — Apply This Repo's Theme
 
 ### Tasks
 
-- [ ] Copy `.agents/assets/globals.css` into `packages/ui/src/styles/globals.css`.
-- [ ] Preserve any required shadcn/Tailwind imports already present in LLAAB's globals file.
-- [ ] Ensure the theme represents shadcn preset `b7BE9nf27X` light mode.
-- [ ] Confirm `packages/ui` exports `./globals.css`.
-- [ ] Keep dark-mode tokens only if they are present in the generated theme and do not add extra
+- [x] Copy `.agents/assets/globals.css` into `packages/ui/src/styles/globals.css`.
+- [x] Preserve any required shadcn/Tailwind imports already present in LLAAB's globals file.
+- [x] Ensure the theme represents shadcn preset `b7BE9nf27X` light mode.
+- [x] Confirm `packages/ui` exports `./globals.css`.
+- [x] Keep dark-mode tokens only if they are present in the generated theme and do not add extra
       dark-mode work in this phase.
 
 ### Validation
 
-- [ ] `pnpm --filter @workspace/ui typecheck`
+- [x] `pnpm --filter @workspace/ui typecheck`
 
 ## Phase 07C — Wire Tailwind 4 into the Client
 
 ### Tasks
 
-- [ ] Add `@tailwindcss/vite` and `tailwindcss` where needed.
-- [ ] Add `@workspace/ui` as a client dependency.
-- [ ] Update `apps/client/vite.config.ts` to include the Tailwind Vite plugin.
-- [ ] Add client TS/Vite aliases for `@workspace/ui/*` if needed.
-- [ ] Replace Panda CSS imports in `apps/client/src/main.tsx` with `@workspace/ui/globals.css`.
-- [ ] Keep `apps/client/src/styles/theme.css`, `panda.config.ts`, and `styled-system` aliases until no
+- [x] Add `@tailwindcss/vite` and `tailwindcss` where needed.
+- [x] Add `@workspace/ui` as a client dependency.
+- [x] Update `apps/client/vite.config.ts` to include the Tailwind Vite plugin.
+- [x] Add client TS/Vite aliases for `@workspace/ui/*` if needed.
+- [x] Replace Panda CSS imports in `apps/client/src/main.tsx` with `@workspace/ui/globals.css`.
+- [x] Keep `apps/client/src/styles/theme.css`, `panda.config.ts`, and `styled-system` aliases until no
       `@styled-system/*` imports remain.
-- [ ] Verify `StyleSmokeTest` still renders or temporarily leave it harmless until the migration is
+- [x] Verify `StyleSmokeTest` still renders or temporarily leave it harmless until the migration is
       visibly complete.
 
 ### Validation
 
-- [ ] `pnpm --filter @workspace/client typecheck`
-- [ ] `pnpm --filter @workspace/client build`
+- [x] `pnpm --filter @workspace/client typecheck`
+- [x] `pnpm --filter @workspace/client build`
 
 ## Phase 07D — Migrate Layouts First
 

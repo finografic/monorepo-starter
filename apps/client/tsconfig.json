@@ -11,6 +11,8 @@
       "lib/*": ["../server/src/lib/*"],
       "providers/*": ["./src/providers/*"],
       "queries/*": ["./src/queries/*"],
+      "@workspace/ui/globals.css": ["../../packages/ui/src/styles/globals.css"],
+      "@workspace/ui/*": ["../../packages/ui/src/*"],
       "@styled-system/*": ["./styled-system/*"],
       "@styled-system/css": ["./styled-system/css"],
       "@styled-system/jsx": ["./styled-system/jsx"],
