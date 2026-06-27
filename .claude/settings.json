@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm lint.fix:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm --filter:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(npm view:*)",
+      "Bash(node_modules/.bin/oxlint --rules:*)",
+      "Bash(node_modules/.bin/oxlint --help:*)",
+      "Bash(node_modules/.bin/oxfmt --help:*)"
+    ]
+  }
+}
