@@ -203,3 +203,18 @@ apps/client/src/queries/
 - LLAAB AI/provider pages and routes.
 - LLAAB basic password auth.
 - Vault, runs, ingestion, crons, and agent execution.
+
+## Deferred Shadcn Migration Notes
+
+When it is time to move from `@finografic/design-system` + Panda CSS to shadcn + Tailwind:
+
+- Copy `packages/ui` from `/Users/justin/LLAAB` directly as the primary UI package source.
+- Copy the relevant shadcn/Tailwind/client setup from LLAAB, but cross-check against the fresh
+  generated reference repo at `/Users/justin/repos-finografic/vite-monorepo`.
+- Use the shadcn preset `b7BE9nf27X` for the light-mode theme.
+- Use this repo's generated theme CSS at `.agents/assets/globals.css` as the theme source.
+- Consider copying selected files from `/Users/justin/LLAAB/apps/client/src/layouts`, especially
+  the main app layout.
+- Keep LLAAB as the architectural reference and `vite-monorepo` as the clean generated reference.
+- Do this after Vite 8, Hono RPC, TanStack Query, server route folders, and React Router data
+  routing are stable.
