@@ -5,10 +5,17 @@ node_modules/
 # Build outputs
 dist/
 build/
-.turbo/
 styled-system/
 *.tsbuildinfo
 deployments/
+
+# Monorepos
+.turbo/
+.moon/cache
+.moon/docker
+
+# Graphify
+graphify-out/
 
 # Environment and secrets
 .env
@@ -26,9 +33,6 @@ deployments/
 .codex/*
 !.codex/hooks.json
 .worktrees/
-
-# Graphify
-graphify-out/
 
 # Database and local app data
 *.db
@@ -106,3 +110,6 @@ ehthumbs.db
 Desktop.ini
 *~ehthumbs.db
 *~
+
+# security
+deps-xscan-report.json
