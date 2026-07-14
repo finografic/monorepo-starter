@@ -1,6 +1,7 @@
 import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent } from '@workspace/ui/components/card';
+import { Col, Row } from '@workspace/ui/components/grid';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -89,19 +90,21 @@ export function LandingPage(): React.JSX.Element {
           {t('app.features.heading', "What's included")}
         </h2>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Row align="stretch" gutterWidth={16}>
           {FEATURES.map((feature) => (
-            <Card key={feature.key}>
-              <CardContent className="p-5">
-                <div className="mb-2 text-2xl">{feature.icon}</div>
-                <p className="font-semibold">{t(feature.titleKey, feature.titleDefault)}</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t(feature.descKey, feature.descDefault)}
-                </p>
-              </CardContent>
-            </Card>
+            <Col key={feature.key} xs={12} sm={6}>
+              <Card className="h-full">
+                <CardContent className="p-5">
+                  <div className="mb-2 text-2xl">{feature.icon}</div>
+                  <p className="font-semibold">{t(feature.titleKey, feature.titleDefault)}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {t(feature.descKey, feature.descDefault)}
+                  </p>
+                </CardContent>
+              </Card>
+            </Col>
           ))}
-        </div>
+        </Row>
       </section>
     </div>
   );
