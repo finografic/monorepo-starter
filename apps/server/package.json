@@ -43,7 +43,7 @@
     "@hono/standard-validator": "^0.2.0",
     "@scalar/hono-api-reference": "^0.10.19",
     "@workspace/config": "workspace:*",
-    "better-sqlite3": "^11.9.0",
+    "better-sqlite3": "^13.0.3",
     "drizzle-orm": "^0.45.1",
     "drizzle-valibot": "^0.4.2",
     "hono": "^4.12.27",
@@ -56,12 +56,12 @@
   },
   "devDependencies": {
     "@clack/prompts": "^0.10.0",
-    "@types/better-sqlite3": "^7.6.13",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^24.12.0",
     "drizzle-kit": "^0.31.0",
-    "tsdown": "^0.21.10",
+    "tsdown": "^0.22.14",
     "tsx": "^4.22.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.10"
   }
 }
