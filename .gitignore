@@ -82,9 +82,6 @@ html/
 cookies.txt
 cookies_*.txt
 
-# Graphify
-graphify-out/
-
 # Archives
 *.tar
 *.tar.gz
