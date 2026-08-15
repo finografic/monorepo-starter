@@ -1,7 +1,8 @@
 # @finografic/monorepo-starter — Roadmap
 
-> **Status:** Phase 04 complete. Auth, i18n, admin CMS, full client UI, and DS integration all done.
-> 📅 2026-05-27
+> **Status:** Starter refresh complete through branding, shadcn/Tailwind, TypeScript 6, syncpack 15,
+> and SQLite runtime validation.
+> 📅 2026-08-16
 
 This roadmap is the high-level sequencing plan for turning this repo into a selective-extraction
 starter based on `/Users/justin/repos-finografic/touch-monorepo`.
@@ -24,14 +25,15 @@ Detailed execution lives in:
 - [TODO — Phase 06 LLAAB Client/Server Patterns](/docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md)
 - [TODO — Phase 07 Shadcn Tailwind Migration](/docs/todo/TODO_PHASE_07_SHADCN_TAILWIND_MIGRATION.md)
 - [DONE — Grid Layout Migration](/docs/todo/DONE_GRID_LAYOUT_MIGRATION.md)
+- [DONE — Monorepo Starter Update](/docs/todo/DONE_MONOREPO_STARTER_UPDATE.md)
 
 ## Next
 
-> **Context:** Phases 01–05 complete. Auth, env, i18n, admin routes, full client UI, DS integration,
-> OpenAPI/Scalar docs, pino logging, error envelope, and rate limiting are all wired up.
-> `pnpm build` + `pnpm typecheck` pass cleanly across all packages.
+> **Context:** Core starter work is complete. Current follow-up work should focus on tests, CI, and
+> explicitly selected optional migrations.
+> `pnpm install --frozen-lockfile`, `pnpm typecheck`, `pnpm build`, and `pnpm syncpack:lint` pass.
 
-📅 2026-05-27
+📅 2026-08-16
 
 ---
 
@@ -173,11 +175,11 @@ These are natural extensions once the starter is stable and demonstrated.
 ## Key Principles
 
 1. **Server first, client second** — routes/schemas must exist before UI can consume them.
-2. **Design-system as portfolio** — use DS components on landing page and admin to showcase the system.
+2. **Owned UI primitives** — keep reusable shadcn/Tailwind components in `@workspace/ui`.
 3. **Follow source patterns** — match touch-monorepo's route/handler/schema structure exactly.
 4. **Starter-grade, not production** — auth is real but minimal; CMS is functional but not feature-complete.
 5. **Small batches with cleanup** — commit checkpoint after each sub-phase.
-6. **Demo-worthy UX** — every page should look intentional; this is a portfolio piece, not a boilerplate dump.
+6. **Intentional UX** — every page should look purposeful without adding product-specific sample apps.
 
 ## P0 — Active
 
@@ -186,6 +188,8 @@ These are natural extensions once the starter is stable and demonstrated.
 - ~~Adopt the newer LLAAB client/server architecture patterns: Vite 8, Hono RPC, TanStack Query,
   route-folder server structure, and React Router data-router setup.~~ **Complete.** Detail: [TODO — Phase 06 LLAAB Client/Server Patterns](/docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md)
 - ~~Root monorepo bootstrap and planning docs.~~ **Complete.** Detail: [TODO — Phase 01 Root Bootstrap](/docs/todo/TODO_PHASE_01_ROOT_BOOTSTRAP.md)
+- ~~Refresh branding, public shell, i18n seeds, toolchain policy, and TypeScript baseline.~~ **Complete.**
+  Detail: [DONE — Monorepo Starter Update](/docs/todo/DONE_MONOREPO_STARTER_UPDATE.md)
 
 ## P1 — Next Up
 
@@ -203,6 +207,8 @@ These are natural extensions once the starter is stable and demonstrated.
 - Add example tests and CI once the package graph stabilises.
 - Decide whether the starter should ship release/versioning automation or remain app-only.
 - Add a starter-focused example content/data set after the dashboard shell exists.
+- Revisit PostgreSQL only when explicitly selected; SQLite remains the default.
+- Revisit TypeScript 7 after the i18n package peer dependency chain supports it.
 
 ## Non-starters
 
@@ -236,3 +242,4 @@ These are natural extensions once the starter is stable and demonstrated.
 | 2026-06-28 | Phase 06 complete — Vite 8, Hono RPC, TanStack Query, route-tree migration   |
 | 2026-06-28 | Phase 07 complete — shadcn/Tailwind UI package migration                     |
 | 2026-07-14 | Grid layout migration — Landing + AdminDashboard on `@workspace/ui` Row/Col  |
+| 2026-08-16 | Starter update — branding, shell, i18n, syncpack, TS6, SQLite validation     |

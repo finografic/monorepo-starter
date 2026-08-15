@@ -1,163 +1,94 @@
-# monorepo-starter — Handoff
+# monorepo-starter - Handoff
 
 ## Project
 
-`@finografic/monorepo-starter` — Full-stack TypeScript monorepo starter built as a portfolio piece.
-Extracted selectively from `/Users/justin/repos-finografic/touch-monorepo`.
+`@finografic/monorepo-starter` is a full-stack TypeScript starter with a Vite/React client, Hono API server, Auth.js credentials auth, DB-backed i18n, admin surfaces, Drizzle SQLite persistence, and owned shadcn/Tailwind UI primitives.
 
-**Phase status:** Phases 01–05 complete. Phase 06 (testing + CI) is next.
+**Current status:** starter refresh complete through branding, i18n seed updates, selective UI polish, syncpack v15, and TypeScript 6. SQLite remains the default database. PostgreSQL is deferred until explicitly selected.
 
 ---
 
 ## Architecture
 
-```
+```text
 monorepo-starter/
 ├── apps/
-│   ├── client/          Vite 7 + React 19 + Panda CSS + @finografic/design-system
+│   ├── client/          Vite 8 + React 19 + React Router v7 + Tailwind 4
 │   └── server/          Hono + @hono/node-server + Drizzle ORM + Auth.js
-├── config/              @workspace/config — Valibot env validation + dotenv
-├── packages/            (empty — core/shared intentionally skipped)
+├── config/              @workspace/config - Valibot env validation + dotenv
+├── packages/
+│   └── ui/              owned shadcn source components + global theme tokens
 └── pnpm-workspace.yaml  declares config, packages/*, apps/*
 ```
 
-**Client** (`apps/client`) — port 3000, proxies `/api` → server
-**Server** (`apps/server`) — port 4000, serves `/api/*`
-**Config** (`config/`) — shared env schema, root-dir discovery, workspace paths
+- Client dev server: `http://localhost:3000`
+- Server dev API: `http://localhost:4040/api`
+- API reference: `http://localhost:4040/api/reference`
 
 ---
 
 ## Stack
 
-| Layer          | Technology                                                     |
-| -------------- | -------------------------------------------------------------- |
-| Runtime        | Node.js, pnpm, Turbo                                           |
-| Server         | Hono, @hono/node-server, @hono/auth-js, hono-openapi           |
-| Database       | better-sqlite3, Drizzle ORM, drizzle-valibot                   |
-| Auth           | @auth/core (Auth.js), JWT strategy, credentials provider       |
-| Validation     | Valibot (server + client)                                      |
-| Client         | React 19, React Router v6, react-i18next, i18next-http-backend |
-| Styling        | Panda CSS, @finografic/design-system (preset + components)     |
-| Logging        | hono-pino + pino (picocolors dev destination)                  |
-| API Docs       | hono-openapi + @scalar/hono-api-reference                      |
-| Build (server) | tsdown (rolldown)                                              |
-| Build (client) | Vite 7                                                         |
-| Lint           | oxlint (root config + per-app configs)                         |
-| Type check     | tsc --noEmit (all packages)                                    |
+| Layer      | Technology                                                       |
+| ---------- | ---------------------------------------------------------------- |
+| Runtime    | Node >=24.16.0, pnpm >=10.20.0, Turborepo                        |
+| Server     | Hono, @hono/node-server, @hono/auth-js, hono-openapi             |
+| Database   | better-sqlite3 13, Drizzle ORM, drizzle-valibot                  |
+| Auth       | @auth/core, JWT strategy, credentials provider                   |
+| Validation | Valibot                                                          |
+| Client     | Vite 8, React 19, React Router v7, TanStack Query, react-i18next |
+| Styling    | Tailwind 4, shadcn source components, Finografic brand tokens    |
+| Logging    | hono-pino + pino                                                 |
+| API Docs   | hono-openapi + @scalar/hono-api-reference                        |
+| Tooling    | TypeScript 6, tsdown 0.22, oxlint, oxfmt, syncpack 15            |
 
 ---
 
-## Server Route Map
+## Current UI Notes
 
-| Method | Path                           | Auth          | Description                          |
-| ------ | ------------------------------ | ------------- | ------------------------------------ |
-| GET    | /api/health                    | public        | Liveness check                       |
-| GET    | /api/demo                      | public        | Demo hello-world                     |
-| POST   | /api/auth/sign-up              | public        | Register new account (rate-limited)  |
-| POST   | /api/auth/clear-all-cookies    | public        | Debug: wipe all auth cookies         |
-| \*     | /api/auth/\*                   | public        | Auth.js standard routes              |
-| GET    | /api/i18n/:namespace           | public        | i18next bulk bundle load             |
-| GET    | /api/i18n/translations/:domain | public        | Per-domain CMS list                  |
-| GET    | /api/users                     | admin         | List all users                       |
-| PATCH  | /api/users/:id                 | authenticated | Update user (admin: any; user: self) |
-| DELETE | /api/users/:id                 | admin         | Delete user                          |
-| PATCH  | /api/translations/:domain/:id  | admin         | Update translation entry             |
-| GET    | /api/doc                       | public        | OpenAPI 3.1 JSON spec                |
-| GET    | /api/reference                 | public        | Scalar interactive API docs          |
+- `apps/client/src/layout/Layout.tsx` renders the Finografic logo and keeps `LanguageSwitcher` visible.
+- `apps/client/src/pages/LandingPage.tsx` is starter-focused and intentionally excludes sample-app, deployment, and print-mode content.
+- Brand assets live in `apps/client/src/assets/`.
+- Global theme tokens live in `packages/ui/src/styles/globals.css`.
+- Multi-column layouts in `apps/client` should use `@workspace/ui` `Container` / `Row` / `Col`.
 
 ---
 
-## Client Route Map
+## Database Decision
 
-| Path                | Guard         | Component                          |
-| ------------------- | ------------- | ---------------------------------- |
-| /                   | public        | LandingPage                        |
-| /login              | public        | LoginPage (sign-in/sign-up toggle) |
-| /dashboard          | authenticated | DashboardPage                      |
-| /admin              | role=admin    | AdminLayout (nested)               |
-| /admin              | role=admin    | AdminDashboardPage                 |
-| /admin/users        | role=admin    | AdminUsersPage                     |
-| /admin/translations | role=admin    | AdminTranslationsPage              |
-| /admin/settings     | role=admin    | AdminSettingsPage                  |
+SQLite remains the selected default.
+
+PostgreSQL is deferred because no current starter requirement needs multi-process production parity, networked database deployment, or a hosted environment. Revisit it only as an explicit migration with a separate rollback point, adapter/schema plan, seed-data split, local Postgres orchestration, and validation against auth, users, i18n, admin mutations, and health.
 
 ---
 
-## Database Schema
+## Toolchain Decisions
 
-All tables in `apps/server/src/db/schemas/`:
-
-| Table                 | Key columns                                                                |
-| --------------------- | -------------------------------------------------------------------------- |
-| `user`                | id, name, email, hashedPassword, role, emailVerified, createdAt, updatedAt |
-| `session`             | id, userId, expires, sessionToken                                          |
-| `account`             | id, userId, provider, providerAccountId, ...                               |
-| `verification_token`  | identifier, token, expires                                                 |
-| `supported_languages` | id, code, name, isDefault, isActive                                        |
-| `translations_ui`     | id, key, translations (JSON), isActive                                     |
-| `translations_app`    | id, key, translations (JSON), isActive                                     |
-| `translations_admin`  | id, key, translations (JSON), isActive                                     |
-
-Seed: en-GB (default) + es-ES; 22 UI + 12 app + 19 admin translation keys.
+- Graphify integration was removed; use lean-ctx for repository exploration and large outputs.
+- Syncpack v15 is active via `syncpack.config.ts`; policy groups are starter-only and exclude removed Panda/design-system packages.
+- TypeScript 6 is active. TypeScript 7 is deferred until the i18n dependency chain peers with TS7.
+- Turborepo remains the task runner. Moon/Proto was not adopted because this starter has a small package graph and no multi-app orchestration need.
 
 ---
 
-## Key Files
+## Validation Snapshot
 
-| File                                            | Purpose                                                  |
-| ----------------------------------------------- | -------------------------------------------------------- |
-| `apps/server/env.server.ts`                     | Server env schema (Valibot + shared env)                 |
-| `apps/server/src/types/app.types.ts`            | `AppBindings`, `AppOpenAPI`, `AppHandler`, `AppContext`  |
-| `apps/server/src/lib/create-app.ts`             | App factory; wires pino, notFound, onError               |
-| `apps/server/src/lib/auth.ts`                   | `getAuthConfig()` — Auth.js config factory               |
-| `apps/server/src/lib/configure-openapi.ts`      | Registers `/api/doc` + `/api/reference`                  |
-| `apps/server/src/lib/require-auth.ts`           | `requireAuth()` — wraps `verifyAuth()`                   |
-| `apps/server/src/lib/require-role.ts`           | `requireRole('admin')` — checks session role             |
-| `apps/server/src/middlewares/pino-logger.ts`    | Request logger (picocolors dev, JSON prod)               |
-| `apps/server/src/middlewares/rate-limit.ts`     | In-memory rate limiter middleware                        |
-| `apps/client/src/context/AuthContext.tsx`       | `AuthProvider` + `useAuth()` hook                        |
-| `apps/client/src/components/ProtectedRoute.tsx` | Role-aware route guard                                   |
-| `apps/client/src/i18n/i18n.config.ts`           | i18next HTTP backend + localStorage detection            |
-| `apps/client/panda.config.ts`                   | Panda CSS config with `@finografic/design-system` preset |
-| `config/src/env.ts`                             | Shared env schema (`@workspace/config`)                  |
+Last full validation during the refresh:
+
+- `pnpm install --frozen-lockfile`
+- `pnpm syncpack:lint`
+- `pnpm typecheck`
+- `pnpm build`
+- `pnpm lint` passed with warnings only.
+- `pnpm test` ran with no package test tasks configured.
+- Server dev health smoke returned `200` from `/api/health` on port `4040`.
+
+Known warning: client build reports a chunk larger than 500 kB.
 
 ---
 
-## Design System Notes
+## Next
 
-- Import components from `@finografic/design-system`
-- Use `AvatarDS` (not `Avatar` — that's a compound namespace)
-- `Text` component: `color` takes semantic names only (`"muted"`, `"error"`, not token paths)
-- `Badge` palette: `"primary" | "success" | "warning" | "danger" | "info" | "neutral"`
-- `Button`: no `asChild`; use styled `<Link>` with `css({})` for navigation CTAs
-- `DataTable`: requires `classNames: { table: DataTableTableClassNames }`
-
----
-
-## Decisions
-
-1. Used custom picocolors pino destination instead of pino-pretty to avoid worker-thread crashes. (2026-05-27)
-2. `sqliteBooleanField()` returns `0|1`; a `normalisePatch()` helper converts to `boolean` for Drizzle `.set()`. (2026-05-27)
-3. Root-level oxlint config is what lint-staged runs — app-level overrides only apply to `pnpm lint` within each app. (2026-05-27)
-4. `packages/core` and `packages/shared` from source intentionally skipped — no generalisable code identified. (2026-05-27)
-5. No GitHub Pages / deployment workflow — unsuitable for a full-stack monorepo server. (2026-05-27)
-
----
-
-## Open Questions
-
-- Phase 4F browser validation still pending (cookie names in DevTools, i18n persistence, end-to-end user flow).
-- Rate limiter is in-memory and resets on restart — acceptable for starter; note if deploying multi-process.
-
----
-
-## Status
-
-Phase 05 complete. Next: **Phase 06 — Testing + CI**.
-
-Remaining work (from `docs/todo/NEXT_STEPS.md`):
-
-- Vitest unit tests: `password.utils.ts`, `buildDomainGroupedResources`
-- Vitest integration tests: auth routes, i18n routes
-- GitHub Actions CI workflow: install + typecheck + build + test
-
-Phase 5 changes are uncommitted. Run `pnpm build` and `pnpm typecheck` to confirm green before committing.
+- Add real Vitest coverage for auth utilities, i18n resource grouping, auth routes, and i18n routes.
+- Add browser automation only after choosing a test runner.
+- Revisit PostgreSQL only when explicitly selected.

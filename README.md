@@ -2,31 +2,31 @@
 
 > A selective-extraction, full-stack pnpm monorepo starter — pick what you need, delete the rest.
 
-Built as a reference implementation and portfolio demo for a modern TypeScript monorepo with a production-quality
-toolchain. Everything is pre-wired: auth, routing, i18n, database, design tokens, OpenAPI docs, structured logging,
-and CI-ready linting — all in a single repository you can clone and carve up.
+Built as a reference implementation for a modern TypeScript monorepo with a production-quality toolchain.
+Everything is pre-wired: auth, routing, i18n, database, design tokens, OpenAPI docs, structured logging, and
+CI-ready linting — all in a single repository you can clone and carve up.
 
 ---
 
 ## Stack at a Glance
 
-| Layer         | Technology                                                        |
-| :------------ | :---------------------------------------------------------------- |
-| Workspace     | pnpm workspaces + Turborepo                                       |
-| Client        | Vite 8, React 19, React Router v7                                 |
-| Styling       | Tailwind 4 + shadcn components in `@workspace/ui`                 |
-| i18n          | i18next + i18next-http-backend + react-i18next                    |
-| Server        | Hono, `@hono/node-server`                                         |
-| Database      | Drizzle ORM, better-sqlite3                                       |
-| Auth          | Auth.js (`@auth/core` + `@hono/auth-js`)                          |
-| API docs      | hono-openapi + Scalar UI (`@scalar/hono-api-reference`)           |
-| Logging       | Pino (via `hono-pino`)                                            |
-| Env config    | Valibot-validated env, auto-resolved dotenv (`@workspace/config`) |
-| Build         | tsdown (server), Vite (client), tsc project references            |
-| Lint & format | oxlint, oxfmt (Rust-based, fast)                                  |
-| Git hooks     | Husky + lint-staged + commitlint                                  |
-| Testing       | Vitest                                                            |
-| Deps          | syncpack (cross-workspace version alignment)                      |
+| Layer         | Technology                                                           |
+| :------------ | :------------------------------------------------------------------- |
+| Workspace     | pnpm workspaces + Turborepo                                          |
+| Client        | Vite 8, React 19, React Router v7                                    |
+| Styling       | Tailwind 4 + shadcn components in `@workspace/ui`                    |
+| i18n          | i18next + i18next-http-backend + react-i18next                       |
+| Server        | Hono, `@hono/node-server`                                            |
+| Database      | Drizzle ORM, better-sqlite3 13                                       |
+| Auth          | Auth.js (`@auth/core` + `@hono/auth-js`)                             |
+| API docs      | hono-openapi + Scalar UI (`@scalar/hono-api-reference`)              |
+| Logging       | Pino (via `hono-pino`)                                               |
+| Env config    | Valibot-validated env, auto-resolved dotenv (`@workspace/config`)    |
+| Build         | TypeScript 6, tsdown (server), Vite (client), tsc project references |
+| Lint & format | oxlint, oxfmt (Rust-based, fast)                                     |
+| Git hooks     | Husky + lint-staged + commitlint                                     |
+| Testing       | Vitest                                                               |
+| Deps          | syncpack (cross-workspace version alignment)                         |
 
 ---
 
@@ -59,7 +59,7 @@ server independently enforces the same roles on every API route.
 
 ### `apps/server` — Hono API
 
-Hono application served by `@hono/node-server` on port **4000** in development. Built with `tsdown` for production.
+Hono application served by `@hono/node-server` on port **4040** in development. Built with `tsdown` for production.
 
 **API routes (all under `/api`):**
 
@@ -103,7 +103,7 @@ Centralised environment configuration shared by both apps.
 ```
 monorepo-starter/
 ├── apps/
-│   ├── client/          # Vite 7 + React 19 SPA
+│   ├── client/          # Vite 8 + React 19 SPA
 │   └── server/          # Hono API server
 ├── config/              # @workspace/config — env + paths
 ├── docs/
@@ -119,7 +119,7 @@ monorepo-starter/
 
 ## Getting Started
 
-**Requirements:** Node ≥ 22.17.1, pnpm ≥ 10.20.0
+**Requirements:** Node ≥ 24.16.0, pnpm ≥ 10.20.0
 
 ```bash
 # Install dependencies
@@ -133,8 +133,8 @@ pnpm dev
 ```
 
 The client dev server starts on `http://localhost:3000`.
-The API server starts on `http://localhost:4000`.
-The Scalar API explorer is available at `http://localhost:4000/api/reference`.
+The API server starts on `http://localhost:4040`.
+The Scalar API explorer is available at `http://localhost:4040/api/reference`.
 
 ---
 

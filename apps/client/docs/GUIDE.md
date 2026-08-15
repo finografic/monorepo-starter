@@ -4,13 +4,13 @@
 
 ## Stack
 
-| Layer   | Choice                                      |
-| ------- | ------------------------------------------- |
-| Bundler | Vite 8                                      |
-| UI      | React 19 + shadcn via `@workspace/ui`       |
-| Router  | React Router v7 with `createBrowserRouter`  |
-| Data    | TanStack Query + Hono RPC via `src/lib/api` |
-| Styles  | Tailwind 4 + `@workspace/ui/globals.css`    |
+| Layer   | Choice                                                          |
+| ------- | --------------------------------------------------------------- |
+| Bundler | Vite 8                                                          |
+| UI      | React 19 + shadcn via `@workspace/ui`                           |
+| Router  | React Router v7 with `createBrowserRouter`                      |
+| Data    | TanStack Query + Hono RPC via `src/lib/api`                     |
+| Styles  | Tailwind 4 + Finografic tokens from `@workspace/ui/globals.css` |
 
 ## Project Layout
 
@@ -27,6 +27,7 @@ apps/client/
     context/                    # AuthProvider / useAuth
     layout/                     # public and admin layout shells
     pages/                      # route page components
+    assets/                     # favicon, logo, and local font assets
     providers/
       QueryClientProvider/      # TanStack Query client provider
     queries/                    # TanStack Query hooks
@@ -114,6 +115,9 @@ Client styling is Tailwind 4 plus owned shadcn source components.
   `packages/ui`.
 - Keep foundational colors on shadcn tokens such as `bg-background`, `bg-card`, `text-foreground`,
   `text-muted-foreground`, `border-border`, and `ring-ring`.
+- Use Finografic brand tokens such as `text-brand-cyan`, `bg-brand-green-soft`, and
+  `text-brand-wordmark` only when the UI is intentionally branded.
+- Keep `LanguageSwitcher` visible in the public shell; do not hide it for branded routes.
 
 ## Common Pitfalls
 
