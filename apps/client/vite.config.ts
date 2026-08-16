@@ -1,11 +1,14 @@
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 
+const configDir = dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig(({ mode }) => {
-  const rootEnv = loadEnv(mode, resolve(__dirname, '../..'), '');
-  const apiPort = rootEnv['API_PORT'] ?? '4000';
+  const rootEnv = loadEnv(mode, resolve(configDir, '../..'), '');
+  const apiPort = rootEnv['API_PORT'] ?? '4040';
 
   return {
     plugins: [react(), tailwindcss()],
