@@ -2,7 +2,7 @@ import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { Col, Row } from '@workspace/ui/components/grid';
-import { Globe, Palette, ShieldCheck, Zap } from 'lucide-react';
+import { GlobeIcon, GridIcon, ShieldCheckIcon, ZapIcon } from '@finografic/icons';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { useAuth } from '../context/AuthContext';
 const FEATURES = [
   {
     key: 'auth',
-    Icon: ShieldCheck,
+    Icon: ShieldCheckIcon,
     titleKey: 'app.features.auth.title',
     titleDefault: 'Auth.js + JWT',
     descKey: 'app.features.auth.desc',
@@ -21,7 +21,7 @@ const FEATURES = [
   },
   {
     key: 'i18n',
-    Icon: Globe,
+    Icon: GlobeIcon,
     titleKey: 'app.features.i18n.title',
     titleDefault: 'DB-backed i18n',
     descKey: 'app.features.i18n.desc',
@@ -29,7 +29,7 @@ const FEATURES = [
   },
   {
     key: 'design',
-    Icon: Palette,
+    Icon: GridIcon,
     titleKey: 'app.features.design.title',
     titleDefault: 'shadcn + Tailwind 4',
     descKey: 'app.features.design.desc',
@@ -37,7 +37,7 @@ const FEATURES = [
   },
   {
     key: 'stack',
-    Icon: Zap,
+    Icon: ZapIcon,
     titleKey: 'app.features.stack.title',
     titleDefault: 'Modern full-stack app',
     descKey: 'app.features.stack.desc',
