@@ -6,7 +6,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import finograficLogoUrl from '../assets/finografic-logo.png';
 import { useAuth } from '../context/AuthContext';
 
 const FEATURES = [
@@ -59,11 +58,6 @@ export function LandingPage(): React.JSX.Element {
             <Badge className="mb-4 bg-brand-green-soft text-brand-green-strong hover:bg-brand-green-soft">
               {t('app.badge', 'Open-source starter')}
             </Badge>
-
-            <div className="mb-4 flex items-center gap-3">
-              <img src={finograficLogoUrl} alt="" className="size-8 shrink-0" />
-              <p className="font-heading text-xl leading-8 font-medium text-brand-green">finografic</p>
-            </div>
 
             <h1 className="max-w-3xl text-5xl leading-[0.98] font-semibold text-balance text-foreground sm:text-6xl lg:text-7xl">
               {t('app.title', 'Monorepo Starter')}
