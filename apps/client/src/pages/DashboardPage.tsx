@@ -21,9 +21,9 @@ export function DashboardPage(): React.JSX.Element {
     <div>
       <h1>Dashboard</h1>
       <h2>Server Health</h2>
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {error && <p style={{ color: 'oklch(0.628 0.258 29.234)' }}>Error: {error}</p>}
       {health && (
-        <pre style={{ background: '#f5f5f5', padding: '1rem', borderRadius: '4px' }}>
+        <pre style={{ background: 'oklch(0.970 0.000 89.876)', padding: '1rem', borderRadius: '4px' }}>
           {JSON.stringify(health, null, 2)}
         </pre>
       )}

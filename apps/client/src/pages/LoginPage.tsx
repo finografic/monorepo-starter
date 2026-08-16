@@ -128,6 +128,14 @@ export function LoginPage(): React.JSX.Element {
                     ? t('ui.buttons.signIn', 'Sign In')
                     : t('ui.buttons.signUp', 'Create Account')}
               </Button>
+
+              {mode === 'signin' ? (
+                <div className="rounded-md border border-brand-green/30 bg-brand-green-soft/60 p-3 text-sm text-brand-green-strong">
+                  <p className="font-semibold">{t('ui.auth.demoAccount', 'Demo account')}</p>
+                  <p className="mt-1 font-mono text-[0.85rem] leading-5">user@example.com</p>
+                  <p className="font-mono text-[0.85rem] leading-5">user1234</p>
+                </div>
+              ) : null}
             </form>
 
             <div className="mt-4 text-center text-sm text-muted-foreground">

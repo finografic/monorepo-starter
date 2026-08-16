@@ -25,11 +25,15 @@ export function LanguageSwitcher(): React.JSX.Element {
           key={lng}
           type="button"
           size="xs"
-          variant={current === lng ? 'default' : 'ghost'}
+          variant="outline"
           aria-label={`Switch to ${lng}`}
           aria-pressed={current === lng}
           onClick={() => handleChange(lng)}
-          className="px-2 text-xs tracking-wide"
+          className={
+            current === lng
+              ? 'border-brand-cyan px-2 text-xs tracking-wide text-brand-cyan hover:bg-brand-cyan/10'
+              : 'px-2 text-xs tracking-wide'
+          }
         >
           {LABELS[lng]}
         </Button>

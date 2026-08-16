@@ -17,6 +17,7 @@ const data: Array<{ key: string; translations: Record<string, string> }> = [
   { key: 'ui.common.success', translations: { 'en-GB': 'Success', 'es-ES': 'Éxito' } },
   { key: 'ui.common.notFound', translations: { 'en-GB': 'Not found', 'es-ES': 'No encontrado' } },
   { key: 'ui.common.required', translations: { 'en-GB': 'Required', 'es-ES': 'Obligatorio' } },
+  { key: 'ui.auth.demoAccount', translations: { 'en-GB': 'Demo account', 'es-ES': 'Cuenta demo' } },
   { key: 'ui.nav.home', translations: { 'en-GB': 'Home', 'es-ES': 'Inicio' } },
   { key: 'ui.nav.admin', translations: { 'en-GB': 'Admin', 'es-ES': 'Administración' } },
   { key: 'ui.nav.login', translations: { 'en-GB': 'Login', 'es-ES': 'Iniciar sesión' } },

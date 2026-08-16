@@ -53,30 +53,30 @@ export function LandingPage(): React.JSX.Element {
 
   return (
     <div className="bg-background">
-      <section className="border-b bg-[linear-gradient(180deg,color-mix(in_oklch,var(--brand-green-soft)_45%,white),var(--background)_72%)]">
-        <div className="mx-auto flex min-h-[calc(100dvh-3.5rem)] w-full max-w-6xl flex-col justify-center px-4 py-14 sm:px-6 lg:py-18">
+      <section className="bg-background">
+        <div className="mx-auto flex min-h-[calc(100dvh-3.5rem)] w-full max-w-6xl flex-col justify-start px-4 py-10 sm:px-6 lg:py-12">
           <div className="max-w-3xl">
-            <Badge className="mb-5 bg-brand-green-soft text-brand-green-strong hover:bg-brand-green-soft">
+            <Badge className="mb-4 bg-brand-green-soft text-brand-green-strong hover:bg-brand-green-soft">
               {t('app.badge', 'Open-source starter')}
             </Badge>
 
-            <div className="mb-5 flex items-center gap-3">
-              <img src={finograficLogoUrl} alt="" className="size-12 shrink-0" />
-              <p className="text-sm font-semibold text-brand-wordmark">Finografic</p>
+            <div className="mb-4 flex items-center gap-3">
+              <img src={finograficLogoUrl} alt="" className="size-8 shrink-0" />
+              <p className="font-heading text-xl leading-8 font-medium text-brand-green">finografic</p>
             </div>
 
             <h1 className="max-w-3xl text-5xl leading-[0.98] font-semibold text-balance text-foreground sm:text-6xl lg:text-7xl">
               {t('app.title', 'Monorepo Starter')}
             </h1>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
               {t(
                 'app.subtitle',
                 'A production-shaped TypeScript monorepo with auth, i18n, data access, admin surfaces, and a reusable UI package ready to adapt.',
               )}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-2">
+            <div className="mt-7 flex flex-wrap gap-2">
               {CAPABILITIES.map((capability) => (
                 <span
                   key={capability}
@@ -87,7 +87,7 @@ export function LandingPage(): React.JSX.Element {
               ))}
             </div>
 
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               {isAuthenticated && role === 'admin' ? (
                 <Button asChild className="bg-brand-cyan text-white hover:bg-brand-cyan-hover">
                   <Link to="/admin">{t('ui.nav.adminPanel', 'Admin Panel')}</Link>
@@ -114,38 +114,38 @@ export function LandingPage(): React.JSX.Element {
               )}
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:py-18">
-        <div className="mb-8 max-w-2xl">
-          <p className="text-sm font-semibold text-brand-cyan">
-            {t('app.features.eyebrow', 'Included foundation')}
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold text-foreground">
-            {t('app.features.heading', "What's included")}
-          </h2>
-        </div>
+          <section className="mt-10 w-full lg:mt-12">
+            <div className="mb-5 max-w-2xl">
+              <p className="text-sm font-semibold text-brand-cyan">
+                {t('app.features.eyebrow', 'Included foundation')}
+              </p>
+              <h2 className="mt-1 text-2xl font-semibold text-foreground">
+                {t('app.features.heading', "What's included")}
+              </h2>
+            </div>
 
-        <Row align="stretch" gutterWidth={16}>
-          {FEATURES.map((feature) => (
-            <Col key={feature.key} xs={12} sm={6}>
-              <Card className="h-full border-border/80 shadow-sm">
-                <CardContent className="p-5">
-                  <span className="inline-flex h-8 items-center rounded-full bg-brand-green-soft px-3 text-xs font-semibold text-brand-green-strong">
-                    {feature.label}
-                  </span>
-                  <p className="mt-4 text-lg font-semibold text-foreground">
-                    {t(feature.titleKey, feature.titleDefault)}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {t(feature.descKey, feature.descDefault)}
-                  </p>
-                </CardContent>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+            <Row align="stretch" gutterWidth={16} className="gap-y-4">
+              {FEATURES.map((feature) => (
+                <Col key={feature.key} xs={12} sm={6}>
+                  <Card className="h-full border-border/80 py-0 shadow-sm">
+                    <CardContent className="px-4 pt-4 pb-4">
+                      <span className="inline-flex h-8 items-center rounded-full bg-brand-green-soft px-3 text-xs font-semibold text-brand-green-strong">
+                        {feature.label}
+                      </span>
+                      <p className="mt-3 text-base font-semibold text-foreground">
+                        {t(feature.titleKey, feature.titleDefault)}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {t(feature.descKey, feature.descDefault)}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </section>
+        </div>
       </section>
     </div>
   );
