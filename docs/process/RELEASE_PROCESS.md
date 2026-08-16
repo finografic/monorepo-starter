@@ -30,8 +30,8 @@ Use whatever your scaffold or generator created.
 2. **Version bump** — `package.json` / changelog tooling / workspace versions.
 3. **Git commit and tag** — e.g. `v1.2.3`.
 4. **Push** — branch and tags to GitHub.
-5. **CI** — workflow builds and publishes packages (npm, GitHub Packages, etc.).
-6. **GitHub Release** — optional release notes from tags or changelog.
+5. **CI** — `.github/workflows/release.yml` builds the workspace on `v*` tags.
+6. **GitHub Release** — release notes from the tag. This starter is `"private": true` and is not published to npm / GitHub Packages.
 
 ## Verification after release
 

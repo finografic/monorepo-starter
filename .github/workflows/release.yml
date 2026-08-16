@@ -7,11 +7,9 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  actions: write
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +21,7 @@ jobs:
         with:
           node-version: 24
           registry-url: https://npm.pkg.github.com
-          scope: "__SCOPE__"
+          scope: "@finografic"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
@@ -37,11 +35,6 @@ jobs:
 
       - name: Build
         run: pnpm build
-
-      - name: Publish package
-        run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
