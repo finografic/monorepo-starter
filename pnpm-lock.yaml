@@ -221,8 +221,8 @@ importers:
       '@base-ui/react':
         specifier: ^1.5.0
         version: 1.7.0(@date-fns/tz@1.5.0)(@types/react@19.2.18)(date-fns@4.4.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@fontsource-variable/roboto':
-        specifier: ^5.2.10
+      '@fontsource-variable/dm-sans':
+        specifier: ^5.3.0
         version: 5.3.0
       '@radix-ui/react-collapsible':
         specifier: ^1.1.13
@@ -1090,8 +1090,8 @@ packages:
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
-  '@fontsource-variable/roboto@5.3.0':
-    resolution: {integrity: sha512-BoaaZiQf8fgtxv07KXkTwx1bKz/EoqIlTXq2OOKKXINxp6qXWdnlChqV+hSaDANS49yyUASFl3OVBMMDTCIHFA==}
+  '@fontsource-variable/dm-sans@5.3.0':
+    resolution: {integrity: sha512-BpUG5bqePiDFMBM4ZtLSlPdAIOM990uB1dlXzIf4aw21yQR7BmykedLXXXMqGWsR18aMLOsbWccwJNh3ztTQaA==}
 
   '@hono/auth-js@1.1.1':
     resolution: {integrity: sha512-FM1B9OpRLtehz0uwfH+fVOa9B/b4814jYNMvyXpeibJONRDiPVNflrvolNIgeakB1AmTKxBI+XcY0NnspvSCaw==}
@@ -6516,7 +6516,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.12': {}
 
-  '@fontsource-variable/roboto@5.3.0': {}
+  '@fontsource-variable/dm-sans@5.3.0': {}
 
   '@hono/auth-js@1.1.1(@auth/core@0.34.3)(hono@4.13.2)(react@19.2.8)':
     dependencies:
