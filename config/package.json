@@ -20,8 +20,17 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "·········· LINTING": "···················································",
     "lint": "oxlint -c ../oxlint.config.ts",
+    "lint:fix": "oxlint -c ../oxlint.config.ts --fix",
+    "lint:ci": "oxlint -c ../oxlint.config.ts --quiet",
+    "lint:md": "md-lint",
+    "lint:md:fix": "md-lint --fix",
+    "·········· FORMATTING": "················································",
+    "format:check": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "·········· TYPES": "·····················································",
+    "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
   "dependencies": {

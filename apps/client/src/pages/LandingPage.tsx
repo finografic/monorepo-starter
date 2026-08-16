@@ -1,8 +1,8 @@
+import { GlobeIcon, GridIcon, ShieldCheckIcon, ZapIcon } from '@finografic/icons';
 import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { Col, Row } from '@workspace/ui/components/grid';
-import { GlobeIcon, GridIcon, ShieldCheckIcon, ZapIcon } from '@finografic/icons';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
