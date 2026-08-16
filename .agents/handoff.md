@@ -4,7 +4,7 @@
 
 `@finografic/monorepo-starter` is a full-stack TypeScript starter with a Vite/React client, Hono API server, Auth.js credentials auth, DB-backed i18n, admin surfaces, Drizzle SQLite persistence, and owned shadcn/Tailwind UI primitives.
 
-**Current status:** starter refresh complete through branding, i18n seed updates, selective UI polish, syncpack v15, and TypeScript 6. SQLite remains the default database. PostgreSQL is deferred until explicitly selected.
+**Current status:** starter refresh complete through branding, i18n seed updates, selective UI polish, syncpack v15, and TypeScript 6. SQLite remains the default database. PostgreSQL is deferred and tracked separately in `docs/todo/TODO_POSTGRES_MIGRATION.md`.
 
 ---
 
@@ -58,7 +58,7 @@ monorepo-starter/
 
 SQLite remains the selected default.
 
-PostgreSQL is deferred because no current starter requirement needs multi-process production parity, networked database deployment, or a hosted environment. Revisit it only as an explicit migration with a separate rollback point, adapter/schema plan, seed-data split, local Postgres orchestration, and validation against auth, users, i18n, admin mutations, and health.
+PostgreSQL is deferred because no current starter requirement needs multi-process production parity, networked database deployment, or a hosted environment. The migration is intentionally split into `docs/todo/TODO_POSTGRES_MIGRATION.md` so it can be started as an explicit optional track with its own rollback point, adapter/schema plan, seed-data split, local Postgres orchestration, and validation against auth, users, i18n, admin mutations, and health.
 
 ---
 
@@ -91,4 +91,4 @@ Known warning: client build reports a chunk larger than 500 kB.
 
 - Add real Vitest coverage for auth utilities, i18n resource grouping, auth routes, and i18n routes.
 - Add browser automation only after choosing a test runner.
-- Revisit PostgreSQL only when explicitly selected.
+- If PostgreSQL is explicitly selected, start from `docs/todo/TODO_POSTGRES_MIGRATION.md`.

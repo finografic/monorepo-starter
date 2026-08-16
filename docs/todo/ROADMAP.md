@@ -24,6 +24,7 @@ Detailed execution lives in:
 - [TODO — Phase 04 Data Auth and I18n](/docs/todo/TODO_PHASE_04_DATA_AUTH_AND_I18N.md)
 - [TODO — Phase 06 LLAAB Client/Server Patterns](/docs/todo/TODO_PHASE_06_LLAAB_CLIENT_SERVER_PATTERNS.md)
 - [TODO — Phase 07 Shadcn Tailwind Migration](/docs/todo/TODO_PHASE_07_SHADCN_TAILWIND_MIGRATION.md)
+- [TODO — PostgreSQL Migration](/docs/todo/TODO_POSTGRES_MIGRATION.md)
 - [DONE — Grid Layout Migration](/docs/todo/DONE_GRID_LAYOUT_MIGRATION.md)
 - [DONE — Monorepo Starter Update](/docs/todo/DONE_MONOREPO_STARTER_UPDATE.md)
 
@@ -207,7 +208,6 @@ These are natural extensions once the starter is stable and demonstrated.
 - Add example tests and CI once the package graph stabilises.
 - Decide whether the starter should ship release/versioning automation or remain app-only.
 - Add a starter-focused example content/data set after the dashboard shell exists.
-- Revisit PostgreSQL only when explicitly selected; SQLite remains the default.
 - Revisit TypeScript 7 after the i18n package peer dependency chain supports it.
 
 ## Non-starters

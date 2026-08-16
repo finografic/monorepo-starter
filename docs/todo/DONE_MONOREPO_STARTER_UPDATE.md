@@ -18,7 +18,7 @@ sample apps.
 - Upgraded TypeScript from 5.9 to 6 and updated compatible build/runtime dependencies.
 - Kept Turborepo as the task runner.
 - Deferred TypeScript 7 because the current i18n packages do not yet peer with TS7.
-- Deferred PostgreSQL and kept SQLite as the starter default.
+- Split PostgreSQL migration into its own deferred TODO and kept SQLite as the starter default.
 
 ## Validation
 
@@ -41,7 +41,8 @@ sample apps.
 
 ## Deferred
 
-- PostgreSQL migration remains a future explicit decision.
+- PostgreSQL migration remains a future explicit decision tracked in
+  [TODO — PostgreSQL Migration](/docs/todo/TODO_POSTGRES_MIGRATION.md).
 - TypeScript 7 can be revisited after the i18n dependency chain supports it.
 - Dedicated browser automation tests remain future work because this repo does not currently include a
   browser test runner.
