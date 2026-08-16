@@ -12,10 +12,10 @@
 - 2026-08-16: refreshed starter branding and landing page with Finografic logo/favicon/palette while
   keeping `LanguageSwitcher` visible.
 - Removed project-local Graphify hooks/rules and documented lean-ctx workflow.
-- Updated landing/shell i18n seeds, placeholder colour tokens, syncpack v15 policy, and TypeScript 6.
+- Updated landing/shell i18n seeds, placeholder colour tokens, syncpack v15 policy, and TypeScript 7.
 - Split the deferred SQLite-to-PostgreSQL work into `docs/todo/TODO_POSTGRES_MIGRATION.md`; SQLite
   remains the default database.
-- Deferred TypeScript 7 until the i18n peer dependency chain supports it.
+- Upgraded TypeScript from 6.0.3 to 7.0.2; typecheck and build pass without source changes.
 
 # Session Memory
 
@@ -82,3 +82,4 @@
 Phase 5 files: types/app.types.ts, middlewares/pino-logger.ts, middlewares/rate-limit.ts,
 lib/configure-openapi.ts, lib/create-app.ts (updated), all route files (describeRoute added),
 tsconfig.json (paths), docs/todo/NEXT_STEPS.md, docs/todo/ROADMAP.md, package.json
+

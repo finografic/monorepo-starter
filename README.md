@@ -22,7 +22,7 @@ CI-ready linting — all in a single repository you can clone and carve up.
 | API docs      | hono-openapi + Scalar UI (`@scalar/hono-api-reference`)              |
 | Logging       | Pino (via `hono-pino`)                                               |
 | Env config    | Valibot-validated env, auto-resolved dotenv (`@workspace/config`)    |
-| Build         | TypeScript 6, tsdown (server), Vite (client), tsc project references |
+| Build         | TypeScript 7, tsdown (server), Vite (client), tsc project references |
 | Lint & format | oxlint, oxfmt (Rust-based, fast)                                     |
 | Git hooks     | Husky + lint-staged + commitlint                                     |
 | Testing       | Vitest                                                               |

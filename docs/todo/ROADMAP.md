@@ -1,6 +1,6 @@
 # @finografic/monorepo-starter — Roadmap
 
-> **Status:** Starter refresh complete through branding, shadcn/Tailwind, TypeScript 6, syncpack 15,
+> **Status:** Starter refresh complete through branding, shadcn/Tailwind, TypeScript 7, syncpack 15,
 > and SQLite runtime validation.
 > 📅 2026-08-16
 
@@ -208,7 +208,7 @@ These are natural extensions once the starter is stable and demonstrated.
 - Add example tests and CI once the package graph stabilises.
 - Decide whether the starter should ship release/versioning automation or remain app-only.
 - Add a starter-focused example content/data set after the dashboard shell exists.
-- Revisit TypeScript 7 after the i18n package peer dependency chain supports it.
+- ~~Revisit TypeScript 7 after the i18n package peer dependency chain supports it.~~ **Complete** — TypeScript 7.0.2.
 
 ## Non-starters
 
@@ -243,3 +243,4 @@ These are natural extensions once the starter is stable and demonstrated.
 | 2026-06-28 | Phase 07 complete — shadcn/Tailwind UI package migration                     |
 | 2026-07-14 | Grid layout migration — Landing + AdminDashboard on `@workspace/ui` Row/Col  |
 | 2026-08-16 | Starter update — branding, shell, i18n, syncpack, TS6, SQLite validation     |
+| 2026-08-17 | TypeScript 6.0.3 → 7.0.2                                                     |

@@ -4,7 +4,7 @@
 
 `@finografic/monorepo-starter` is a full-stack TypeScript starter with a Vite/React client, Hono API server, Auth.js credentials auth, DB-backed i18n, admin surfaces, Drizzle SQLite persistence, and owned shadcn/Tailwind UI primitives.
 
-**Current status:** starter refresh complete through branding, i18n seed updates, selective UI polish, syncpack v15, and TypeScript 6. SQLite remains the default database. PostgreSQL is deferred and tracked separately in `docs/todo/TODO_POSTGRES_MIGRATION.md`.
+**Current status:** starter refresh complete through branding, i18n seed updates, selective UI polish, syncpack v15, and TypeScript 7. SQLite remains the default database. PostgreSQL is deferred and tracked separately in `docs/todo/TODO_POSTGRES_MIGRATION.md`.
 
 ---
 
@@ -40,7 +40,7 @@ monorepo-starter/
 | Styling    | Tailwind 4, shadcn source components, Finografic brand tokens    |
 | Logging    | hono-pino + pino                                                 |
 | API Docs   | hono-openapi + @scalar/hono-api-reference                        |
-| Tooling    | TypeScript 6, tsdown 0.22, oxlint, oxfmt, syncpack 15            |
+| Tooling    | TypeScript 7, tsdown 0.22, oxlint, oxfmt, syncpack 15            |
 
 ---
 
@@ -66,7 +66,7 @@ PostgreSQL is deferred because no current starter requirement needs multi-proces
 
 - Graphify integration was removed; use lean-ctx for repository exploration and large outputs.
 - Syncpack v15 is active via `syncpack.config.ts`; policy groups are starter-only and exclude removed Panda/design-system packages.
-- TypeScript 6 is active. TypeScript 7 is deferred until the i18n dependency chain peers with TS7.
+- TypeScript 7.0.2 is active. i18next / react-i18next now peer with `^5 || ^6 || ^7`.
 - Turborepo remains the task runner. Moon/Proto was not adopted because this starter has a small package graph and no multi-app orchestration need.
 
 ---

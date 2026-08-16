@@ -43,6 +43,6 @@ sample apps.
 
 - PostgreSQL migration remains a future explicit decision tracked in
   [TODO — PostgreSQL Migration](/docs/todo/TODO_POSTGRES_MIGRATION.md).
-- TypeScript 7 can be revisited after the i18n dependency chain supports it.
+- TypeScript 7 is now active (`7.0.2`); i18next / react-i18next peer with `^5 || ^6 || ^7`.
 - Dedicated browser automation tests remain future work because this repo does not currently include a
   browser test runner.
