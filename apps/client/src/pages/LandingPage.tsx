@@ -2,6 +2,7 @@ import { Badge } from '@workspace/ui/components/badge';
 import { Button } from '@workspace/ui/components/button';
 import { Card, CardContent } from '@workspace/ui/components/card';
 import { Col, Row } from '@workspace/ui/components/grid';
+import { Globe, Palette, ShieldCheck, Zap } from 'lucide-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,7 @@ import { useAuth } from '../context/AuthContext';
 const FEATURES = [
   {
     key: 'auth',
-    label: 'Auth',
+    Icon: ShieldCheck,
     titleKey: 'app.features.auth.title',
     titleDefault: 'Auth.js + JWT',
     descKey: 'app.features.auth.desc',
@@ -20,7 +21,7 @@ const FEATURES = [
   },
   {
     key: 'i18n',
-    label: 'i18n',
+    Icon: Globe,
     titleKey: 'app.features.i18n.title',
     titleDefault: 'DB-backed i18n',
     descKey: 'app.features.i18n.desc',
@@ -28,7 +29,7 @@ const FEATURES = [
   },
   {
     key: 'design',
-    label: 'UI',
+    Icon: Palette,
     titleKey: 'app.features.design.title',
     titleDefault: 'shadcn + Tailwind 4',
     descKey: 'app.features.design.desc',
@@ -36,7 +37,7 @@ const FEATURES = [
   },
   {
     key: 'stack',
-    label: 'Stack',
+    Icon: Zap,
     titleKey: 'app.features.stack.title',
     titleDefault: 'Modern full-stack app',
     descKey: 'app.features.stack.desc',
@@ -119,20 +120,25 @@ export function LandingPage(): React.JSX.Element {
               </h2>
             </div>
 
-            <Row align="stretch" gutterWidth={16} className="gap-y-4">
+            <Row align="stretch" gutterWidth={16}>
               {FEATURES.map((feature) => (
-                <Col key={feature.key} xs={12} sm={6}>
-                  <Card className="h-full border-border/80 py-0 shadow-sm">
-                    <CardContent className="px-4 pt-4 pb-4">
-                      <span className="inline-flex h-8 items-center rounded-full bg-brand-green-soft px-3 text-xs font-semibold text-brand-green-strong">
-                        {feature.label}
-                      </span>
-                      <p className="mt-3 text-base font-semibold text-foreground">
-                        {t(feature.titleKey, feature.titleDefault)}
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {t(feature.descKey, feature.descDefault)}
-                      </p>
+                <Col key={feature.key} xs={12} md={6} className="mb-4">
+                  <Card className="h-full border-2">
+                    <CardContent className="flex items-start gap-4 px-5 py-3 sm:items-center sm:py-1">
+                      <div
+                        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-green-soft"
+                        aria-hidden="true"
+                      >
+                        <feature.Icon className="size-8 text-brand-green-strong" strokeWidth={1.75} />
+                      </div>
+                      <div>
+                        <p className="font-heading font-semibold">
+                          {t(feature.titleKey, feature.titleDefault)}
+                        </p>
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {t(feature.descKey, feature.descDefault)}
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 </Col>
