@@ -14,7 +14,7 @@ Make multi-column and responsive page layouts consistent across `apps/client` by
 Reference:
 
 - Canonical docs: [`packages/ui/src/components/grid/grid.md`](../../packages/ui/src/components/grid/grid.md)
-- Agent rule: [`.github/instructions/project/components-grid.instructions.md`](../../.github/instructions/project/components-grid.instructions.md)
+- Agent rule: [`.agents/instructions/project/components-grid.instructions.md`](../../.agents/instructions/project/components-grid.instructions.md)
 
 ## Non-goals (left as-is)
 
@@ -75,7 +75,7 @@ Reference:
 ## Phase 1 — Conventions shipped
 
 - [x] Rewrote `packages/ui/src/components/grid/grid.md` for `@workspace/ui` (no `docs/components/grid.md`)
-- [x] Added `.github/instructions/project/components-grid.instructions.md`
+- [x] Added `.agents/instructions/project/components-grid.instructions.md`
 - [x] Linked from `AGENTS.md` project-specific rules
 
 ## Allowlist (intentional non–12-col layout)

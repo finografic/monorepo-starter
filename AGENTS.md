@@ -23,8 +23,8 @@ Reference: [`docs/process/PROJECT_MEMORY_MODEL.md`](./docs/process/PROJECT_MEMOR
 
 ## Rules — Project-Specific
 
-- Project-specific rules live in `.github/instructions/project/**/*.instructions.md`.
-- Grid layouts: `.github/instructions/project/components-grid.instructions.md` — use
+- Project-specific rules live in `.agents/instructions/project/**/*.instructions.md`.
+- Grid layouts: `.agents/instructions/project/components-grid.instructions.md` — use
   `@workspace/ui` `Container` / `Row` / `Col` for multi-column page structure in `apps/client`
   (see `packages/ui/src/components/grid/grid.md`).
 - All internal workspace packages use the `@workspace/*` scope (e.g. `@workspace/client`, `@workspace/server`, `@workspace/config`).
