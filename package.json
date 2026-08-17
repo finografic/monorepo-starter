@@ -1,6 +1,6 @@
 {
   "name": "@finografic/monorepo-starter",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Full-stack pnpm monorepo starter — Vite 8 + React 19 + React Router v7 client; Hono + Drizzle ORM + Auth.js API server; shadcn + Tailwind 4 UI package; shared Valibot-validated env config; Turborepo task orchestration; oxlint toolchain; role-based access control and OpenAPI docs with Scalar UI.",
   "keywords": [
