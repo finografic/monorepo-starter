@@ -142,14 +142,15 @@ Use progressive validation and stop once the change is proven:
 - Prefer adding missing imports on save (`source.addMissingImports: explicit`) and TypeScript auto-import suggestions while typing.
 - Use `:` as the segment separator in npm script names everywhere (e.g. `db:migrations:seed`, not `db.migrations.seed` or space-separated variants).
 - Prefer the published `@finografic/project-scripts` from the registry; use `file:`/`link:` only when explicitly testing local project-scripts changes.
+- Prefer not changing established `dev:reset`/clean scripts unless necessary; put cross-repo reset and pnpm recovery in `@finografic/project-scripts` so consuming repos only bump that package (no extra local scripts).
 - `pnpm link` writes persistent `link:` specifiers in `package.json` and `pnpm-workspace.yaml` overrides — global unlink does not restore registry ranges.
 - Only list seeds in `config/db-setup.config.ts` for schemas/tables that exist in this repo.
 
 ## Learned Workspace Facts
 
 - This is a selective-extraction monorepo starter based on touch-monorepo; intentionally beyond bare-bones (auth, admin/CMS, Drizzle, i18n) and also a GitHub demo/portfolio piece.
-- `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`.
-- Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks.
+- `pnpm-workspace.yaml` declares: `config`, `packages/*`, `apps/*`. Root `packageManager` is `pnpm@11.21.0`.
+- Turbo drives `build`, `dev`, `lint`, `typecheck`, `test`, and `clean` tasks. Root TypeScript is `^7.0.2`.
 - `apps/client`: Vite 8 + React 19 + React Router v7 + shadcn/Tailwind 4; dev on port 3000, proxies `/api` → server. `apps/server`: Hono + @hono/node-server; `tsdown` build, `tsx watch` dev, default port 4000.
 - `@workspace/config`: Valibot env validation + dotenv with root-dir auto-discovery + workspace paths; hosts `db-setup.config.ts`.
 - Each app has a local `oxlint.config.ts` importing presets from `@finografic/oxc-config/oxlint`.
