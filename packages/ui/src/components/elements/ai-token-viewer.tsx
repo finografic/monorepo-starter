@@ -248,7 +248,9 @@ function AiTokenViewerBreakdown({ className }: AiTokenViewerBreakdownProps) {
       </span>
       <div className="flex flex-wrap gap-0.5 font-mono text-xs">
         {tokens.map((token, index) => (
-          <AiTokenViewerToken key={index} token={token} index={index} />
+          // Position is the identity in a token stream — the same text recurs constantly — so the
+          // index is the correct key whenever the tokenizer did not supply an id.
+          <AiTokenViewerToken key={token.id ?? `i${index}`} token={token} index={index} />
         ))}
       </div>
     </div>

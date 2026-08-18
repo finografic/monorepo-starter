@@ -6,6 +6,9 @@ import type { SupportedLanguage } from './i18n.constants';
 
 import { DEFAULT_LANGUAGE, I18N_NAMESPACE, LOCALE_MAPPING, SUPPORTED_LANGUAGES } from './i18n.constants';
 
+// `.use()` below is the i18next instance method for registering plugins — unrelated to the named
+// `use` export the rule is pointing at.
+// oxlint-disable-next-line import/no-named-as-default-member
 void i18n
   .use(HttpBackend)
   .use(LanguageDetector)
@@ -45,13 +48,14 @@ void i18n
       useSuspense: false,
     },
   })
-  .then(() => {
+  .then((t) => {
     if (import.meta.env.DEV) {
       console.group('[i18n] initialized');
       console.log('language:', i18n.language);
       console.log('bundle loaded:', i18n.hasResourceBundle(i18n.language, I18N_NAMESPACE));
       console.groupEnd();
     }
+    return t;
   })
   .catch((err: unknown) => {
     console.error('[i18n] initialization failed:', err);

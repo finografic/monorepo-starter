@@ -13,6 +13,9 @@ const ROLE_VARIANT: Record<UserRow['role'], 'destructive' | 'default' | 'seconda
   public: 'secondary',
 };
 
+/** Stable empty fallback — an inline `?? []` allocates a new array on every render. */
+const NO_USERS: UserRow[] = [];
+
 interface RoleCellProps {
   user: UserRow;
   updatingId: string | null;
@@ -108,7 +111,7 @@ export function AdminUsersPage(): React.JSX.Element {
         </div>
       ) : (
         <DataTable
-          data={usersQuery.data ?? []}
+          data={usersQuery.data ?? NO_USERS}
           columns={columns}
           emptyMessage={t('admin.users.empty', 'No users found')}
         />

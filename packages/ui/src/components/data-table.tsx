@@ -3,6 +3,7 @@ import { ArrowUpDown } from 'lucide-react';
 import { useMemo } from 'react';
 import type { DataTableColumnAlign, DataTableColumnDef } from '../lib/data-table-utils';
 import type { Column, ColumnDef, TableOptions } from '@tanstack/react-table';
+import type { JSX } from 'react';
 
 import { minVisibleTableCellClass } from '../lib/breakpoints';
 import { cn } from '../lib/utils';
@@ -92,7 +93,7 @@ export function DataTable<TData, TValue = unknown>({
   data,
   emptyMessage = 'No results.',
   options,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>): JSX.Element {
   const tableColumns = useMemo(() => toTableColumns(columns), [columns]);
 
   const { visibilityClassByColumnId, alignClassByColumnId } = useMemo(() => {
