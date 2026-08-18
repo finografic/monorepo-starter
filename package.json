@@ -39,11 +39,11 @@
     "icons:server": "pnpm --filter @workspace/client icons:server",
     "update:icons": "pnpm --filter @workspace/client update:icons",
     "·········· LINTING": "···················································",
-    "lint": "oxlint -c oxlint.config.ts",
-    "lint:fix": "oxlint -c oxlint.config.ts --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "lint:md": "md-lint",
     "lint:md:fix": "md-lint --fix",
-    "lint:ci": "oxlint -c oxlint.config.ts --quiet",
+    "lint:ci": "oxlint --quiet",
     "·········· FORMATTING": "················································",
     "format:check": "oxfmt --check",
     "format:fix": "oxfmt",
@@ -104,7 +104,7 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs}": [
       "oxfmt --no-error-on-unmatched-pattern",
-      "oxlint -c oxlint.config.ts --fix --no-error-on-unmatched-pattern"
+      "oxlint --fix --no-error-on-unmatched-pattern"
     ],
     "*.md": [
       "oxfmt --no-error-on-unmatched-pattern",
