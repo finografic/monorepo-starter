@@ -134,3 +134,9 @@ yarn-error.log*
 # Icon manager runtime output
 lucide-manager.config.json
 packages/icons/.icons-server-runtime/
+
+# Server env symlink
+# `apps/server` resolves its env through this link, and a symlink stores only a relative path —
+# no secrets. The blanket `.env.*` rule above matches the link itself, so without this negation a
+# fresh clone (including `genx create monorepo`) has no way to find the root env file.
+!apps/server/.env.development
