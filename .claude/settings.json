@@ -6,7 +6,7 @@
       "Bash(pnpm build:*)",
       "Bash(pnpm install:*)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm lint.fix:*)",
+      "Bash(pnpm lint:fix:*)",
       "Bash(pnpm typecheck:*)",
       "Bash(pnpm --filter:*)",
       "Bash(pnpm exec:*)",
