@@ -21,8 +21,8 @@ importers:
         specifier: ^2.9.1
         version: 2.9.1(oxfmt@0.63.0)(oxlint@1.78.0(oxlint-tsgolint@7.0.2001))
       '@finografic/project-scripts':
-        specifier: ^1.6.1
-        version: 1.6.1(@types/node@24.13.3)(tsx@4.23.12)
+        specifier: ^1.6.2
+        version: 1.6.2(@types/node@24.13.3)(tsx@4.23.12)
       '@types/node':
         specifier: ^24.12.0
         version: 24.13.3
@@ -1106,6 +1106,13 @@ packages:
 
   '@finografic/project-scripts@1.6.1':
     resolution: {integrity: sha512-DhX0W8um7ER/Q2QO9GGLVGhJmexcHOtq8iUdqYU697zLh/xoO64KbDZdf4IGBA3PF7Ko/kkTYxnwSu1HzQ1i8g==, tarball: https://npm.pkg.github.com/download/@finografic/project-scripts/1.6.1/06d0d106bba0da6c3f7a273dbf19ebeadb38d5b3}
+    engines: {node: '>=24.16.0'}
+    hasBin: true
+    peerDependencies:
+      tsx: ^4.0.0
+
+  '@finografic/project-scripts@1.6.2':
+    resolution: {integrity: sha512-WC5QWCmX19uVDj3eX2kLwCZE2C1CUmOMXT7n+lwpHrMMJ7TfpVO6sM4q3N6RUpcD6YJBrwEH7ANBk70aryXG8Q==, tarball: https://npm.pkg.github.com/download/@finografic/project-scripts/1.6.2/57d4c100ad9a4e4273782847eab5a3da992412f2}
     engines: {node: '>=24.16.0'}
     hasBin: true
     peerDependencies:
@@ -6726,6 +6733,23 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+  '@finografic/project-scripts@1.6.2(@types/node@24.13.3)(tsx@4.23.12)':
+    dependencies:
+      '@inquirer/confirm': 5.1.18(@types/node@24.13.3)
+      '@inquirer/core': 10.2.2(@types/node@24.13.3)
+      '@inquirer/input': 4.2.4(@types/node@24.13.3)
+      '@inquirer/prompts': 7.8.6(@types/node@24.13.3)
+      del: 8.0.1
+      execa: 9.6.1
+      ora: 9.0.0
+      parse-gitignore: 2.0.0
+      picocolors: 1.1.1
+      tsx: 4.23.12
+      yaml: 2.9.0
+      yargs: 18.1.0
+    transitivePeerDependencies:
+      - '@types/node'
+
   '@floating-ui/core@1.8.0':
     dependencies:
       '@floating-ui/utils': 0.2.12
@@ -6774,7 +6798,7 @@ snapshots:
 
   '@inquirer/confirm@5.1.18(@types/node@24.13.3)':
     dependencies:
-      '@inquirer/core': 10.2.2(@types/node@24.13.3)
+      '@inquirer/core': 10.3.2(@types/node@24.13.3)
       '@inquirer/type': 3.0.10(@types/node@24.13.3)
     optionalDependencies:
       '@types/node': 24.13.3
@@ -6839,7 +6863,7 @@ snapshots:
 
   '@inquirer/input@4.2.4(@types/node@24.13.3)':
     dependencies:
-      '@inquirer/core': 10.2.2(@types/node@24.13.3)
+      '@inquirer/core': 10.3.2(@types/node@24.13.3)
       '@inquirer/type': 3.0.10(@types/node@24.13.3)
     optionalDependencies:
       '@types/node': 24.13.3
@@ -6884,10 +6908,10 @@ snapshots:
   '@inquirer/prompts@7.8.6(@types/node@24.13.3)':
     dependencies:
       '@inquirer/checkbox': 4.3.2(@types/node@24.13.3)
-      '@inquirer/confirm': 5.1.18(@types/node@24.13.3)
+      '@inquirer/confirm': 5.1.21(@types/node@24.13.3)
       '@inquirer/editor': 4.2.23(@types/node@24.13.3)
       '@inquirer/expand': 4.0.23(@types/node@24.13.3)
-      '@inquirer/input': 4.2.4(@types/node@24.13.3)
+      '@inquirer/input': 4.3.1(@types/node@24.13.3)
       '@inquirer/number': 3.0.23(@types/node@24.13.3)
       '@inquirer/password': 4.0.23(@types/node@24.13.3)
       '@inquirer/rawlist': 4.1.11(@types/node@24.13.3)
